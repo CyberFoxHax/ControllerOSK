@@ -10,6 +10,7 @@ namespace ControllerKeyboard.Controls {
 			Background = null;
 
 			var children = Children.OfType<InputBlock>().ToArray();
+			
 
 			_elmGrid = new InputBlock[3,3];
 			_elmGrid[0, 0] = children[0];
@@ -22,9 +23,11 @@ namespace ControllerKeyboard.Controls {
 			_elmGrid[1, 2] = children[7];
 			_elmGrid[2, 2] = children[8];
 
-			for (int i = 0, c = 0; i < _qwertySequence.Length; i+=4, c++){
+
+			var seq = _abcSequence;
+			for (int i = 0, c = 0; i < seq.Length; i += 4, c++) {
 				var child = children[c];
-				child.SetChars(_qwertySequence.Substring(i, 4));
+				child.SetChars(seq.Substring(i, 4));
 			}
 
 			SetBlock(children[4]);
@@ -39,7 +42,7 @@ namespace ControllerKeyboard.Controls {
 
 		public Input.IInput InputSystem { get; private set; }
 		private readonly InputBlock[,] _elmGrid;
-		public Brush ActiveBrush = Brushes.DeepSkyBlue;
+		public Brush ActiveBrush = Brushes.Orange;
 
 		private void SetBlock(InputBlock elm){
 			if (_activeElement != null)

@@ -6,15 +6,15 @@
             xmlns:controls="clr-namespace:ControllerKeyboard.Controls"
             mc:Ignorable="d" 
             d:DesignHeight="300" d:DesignWidth="300" Background="White">
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
+    <controls:InputBlock />
+    <controls:InputBlock />
+    <controls:InputBlock />
 
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
+    <controls:InputBlock />
+    <controls:InputBlock />
+    <controls:InputBlock />
 
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
-    <controls:InputBlock></controls:InputBlock>
+    <controls:InputBlock />
+    <controls:InputBlock />
+    <controls:InputBlock />
 </UniformGrid>
