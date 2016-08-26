@@ -1,0 +1,10 @@
+﻿<Window x:Class="ControllerKeyboard.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ControllerKeyboard.Controls"
+        Title="MainWindow" Height="338" Width="542" SnapsToDevicePixels="True">
+    <Grid Background="DarkGray">
+        <controls:DisplayInputControl x:Name="InputControl" Margin="122,0,140,69" Background="Orange" />
+        <TextBox IsEnabled="False" Height="69" VerticalAlignment="Bottom" x:Name="TextBox"/>
+    </Grid>
+</Window>
