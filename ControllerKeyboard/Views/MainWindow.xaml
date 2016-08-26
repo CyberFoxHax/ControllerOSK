@@ -4,7 +4,7 @@
         xmlns:controls="clr-namespace:ControllerKeyboard.Controls"
         Title="MainWindow" Height="338" Width="542" SnapsToDevicePixels="True">
     <Grid Background="DarkGray">
-        <controls:DisplayInputControl x:Name="InputControl" Margin="122,0,140,69" Background="Orange" />
-        <TextBox IsEnabled="False" Height="69" VerticalAlignment="Bottom" x:Name="TextBox"/>
+        <controls:DisplayInputControl x:Name="InputControl" Margin="122,0,140,69" Background="CornflowerBlue" />
+        <TextBox IsEnabled="False" Height="69" VerticalAlignment="Bottom" x:Name="TextBox" FontSize="40" Foreground="Black" Text="Diu" />
     </Grid>
 </Window>

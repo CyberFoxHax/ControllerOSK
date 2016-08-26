@@ -4,14 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="73" d:DesignWidth="72" Background="White" BorderThickness="1" BorderBrush="Black">
+             d:DesignHeight="73" d:DesignWidth="72" Background="Gray" BorderThickness="1" BorderBrush="BlueViolet"> 
     <Grid x:Name="Grid">
         <Grid.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontSize"             Value="18"    />
+                <Setter Property="FontWeight"           Value="Black" />
                 <Setter Property="HorizontalAlignment"  Value="Center"/>
                 <Setter Property="VerticalAlignment"    Value="Center"/>
+                <Setter Property="Foreground"           Value="White"/>
             </Style>
+            
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

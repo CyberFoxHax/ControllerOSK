@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ControllerKeyboard.Controls {
 	public partial class InputBlock {
@@ -21,7 +9,7 @@ namespace ControllerKeyboard.Controls {
 			_elms = Grid.Children.OfType<TextBlock>().ToArray();
 		}
 
-		private TextBlock[] _elms;
+		private readonly TextBlock[] _elms;
 
 		public void SetChars(string str){
 			var controls = Grid.Children.OfType<TextBlock>().ToArray();
