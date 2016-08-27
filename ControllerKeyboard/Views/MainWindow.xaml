@@ -2,7 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:ControllerKeyboard.Controls"
-        Title="MainWindow" Height="524" Width="700" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="Transparent">
+        Title="MainWindow"
+        Width="700"
+        Height="524"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        ShowActivated="False"
+    >
     <Border Background="#FF475B9C" CornerRadius="20" BorderBrush="#FF1E316E" BorderThickness="3,3,4,4">
         <Grid>
             <Grid.RowDefinitions>
@@ -28,7 +36,7 @@
                     </Canvas>
                 </Grid>
             </Border>
-            <Grid Grid.Row="1" Margin="285,0,268,32">
+            <Grid Grid.Row="1" Margin="306,0,232,32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -36,23 +44,7 @@
                 <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Horizontal.png" />
                 <TextBlock Text="Move caret" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
             </Grid>
-            <Grid Grid.Row="1" Margin="0,0,553,32">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_LB.png" />
-                <TextBlock Text="Backspace" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
-            </Grid>
-            <Grid Margin="140,0,413,36" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_RB.png" />
-                <TextBlock Text="Space" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
-            </Grid>
-            <Grid Grid.Row="1" Margin="0,32,553,0">
+            <Grid Grid.Row="1" Margin="0,0,543,32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -60,13 +52,29 @@
                 <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_LT.png" />
                 <TextBlock Text="Uppercase" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
             </Grid>
-            <Grid Grid.Row="1" Margin="140,32,413,0">
+            <Grid Margin="161,0,392,32" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_RT.png" />
                 <TextBlock Text="Symbols" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
+            </Grid>
+            <Grid Grid.Row="1" Margin="1,32,552,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_LB.png" />
+                <TextBlock Text="Backspace" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
+            </Grid>
+            <Grid Margin="161,32,392,0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_RB.png" />
+                <TextBlock Text="Space" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
             </Grid>
         </Grid>
     </Border>
