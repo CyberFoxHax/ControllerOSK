@@ -13,22 +13,13 @@ namespace ControllerKeyboard.Controls {
 			
 
 			_elmGrid = new InputBlock[3,3];
-			_elmGrid[0, 0] = children[0];
-			_elmGrid[1, 0] = children[1];
-			_elmGrid[2, 0] = children[2];
-			_elmGrid[0, 1] = children[3];
-			_elmGrid[1, 1] = children[4];
-			_elmGrid[2, 1] = children[5];
-			_elmGrid[0, 2] = children[6];
-			_elmGrid[1, 2] = children[7];
-			_elmGrid[2, 2] = children[8];
+			for (int y = 0, i = 0;	y < 3; y++)
+			for (var x = 0;			x < 3; x++)
+				_elmGrid[x, y] = children[i++];
 
-
-			var seq = _abcSequence;
-			for (int i = 0, c = 0; i < seq.Length; i += 4, c++) {
-				var child = children[c];
-				child.SetChars(seq.Substring(i, 4));
-			}
+			var seq = BaseChars;
+			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
+				children[c].SetChars(seq.Substring(i, 4));
 
 			SetBlock(children[4]);
 		}
@@ -40,8 +31,9 @@ namespace ControllerKeyboard.Controls {
 			base.OnVisualParentChanged(oldParent);
 		}
 
-		public Input.IInput InputSystem { get; private set; }
 		private readonly InputBlock[,] _elmGrid;
+
+		public Input.IInput InputSystem { get; private set; }
 		public Brush ActiveBrush = Brushes.Orange;
 
 		private void SetBlock(InputBlock elm){
@@ -53,6 +45,27 @@ namespace ControllerKeyboard.Controls {
 		}
 
 		private InputBlock _activeElement;
+
+		public void SwitchUppercase() {
+			var children = Children.OfType<InputBlock>().ToArray();
+			var seq = BaseCharsUpper;
+			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
+				children[c].SetChars(seq.Substring(i, 4));
+		}
+
+		public void SwitchLowercase() {
+			var children = Children.OfType<InputBlock>().ToArray();
+			var seq = BaseChars;
+			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
+				children[c].SetChars(seq.Substring(i, 4));
+		}
+
+		public void SwitchSymbols() {
+			var children = Children.OfType<InputBlock>().ToArray();
+			var seq = SymbolChars;
+			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
+				children[c].SetChars(seq.Substring(i, 4));
+		}
 
 		private void InputSystemOnKeyChange(Input.IInput obj) {
 			SetBlock(_elmGrid[
@@ -71,12 +84,25 @@ namespace ControllerKeyboard.Controls {
 
 		public event Action<char> OnKey;
 
-		private const string _abcSequence =
+		public static readonly string BaseChars;
+		public static readonly string BaseCharsUpper;
+		public static readonly string SymbolChars;
+
+		static DisplayInputControl(){
+			BaseChars = QwertySequence;
+			BaseCharsUpper = BaseChars.ToUpper();
+			SymbolChars = 
+				"!?\"@"+ "%€|&" + "=[]§" +
+				"^<>~" + "+-*/" + "°{}¥" +
+				".:;," + "_#'-" + "$()£" ;
+		}
+
+		private const string AbcSequence =
 			"1acb" + "2dfe" + "3gih" +
 			"4jlk" + "5mon" + "6prq" +
 			"7sut" + "8vxw" + "9y0z";
 
-		private const string _qwertySequence =
+		private const string QwertySequence =
 			"1qew" + "2ryt" + "3uoi" +
 			"4psa" + "5dgf" + "6hkj" +
 			"7lxz" + "8cbv" + "9n0m";

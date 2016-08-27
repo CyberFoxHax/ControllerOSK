@@ -24,6 +24,10 @@ namespace ControllerKeyboard.Views {
 				CaretIndex--;
 			else if (input.MoveRight)
 				CaretIndex++;
+
+			if		(input.ChangeSymbols) InputControl.SwitchSymbols();
+			else if (input.ChangeCase	) InputControl.SwitchUppercase();
+			else InputControl.SwitchLowercase();
 		}
 
 		public void InsertText(string input){

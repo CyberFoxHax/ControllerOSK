@@ -111,6 +111,29 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Horizontal.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_A.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_B.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Down.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Left.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Right.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Dpad_Up.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_LB.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Left_Stick.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_LT.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Menu.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_RB.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Right_Stick.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_RT.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Windows.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_X.png" />
+    <Resource Include="Resources\Xelu\Xbox One\XboxOne_Y.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

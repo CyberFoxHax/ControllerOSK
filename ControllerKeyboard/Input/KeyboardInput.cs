@@ -37,14 +37,14 @@ namespace ControllerKeyboard.Input {
 
 			var hasChangd = false;
 
-			if (key == Key.Back )	{Delete = true;			hasChangd = true;}
-			if (key == Key.Space)	{Space  = true;			hasChangd = true;}
-			if (key == Key.E)		{ChangeCase = true;		hasChangd = true;}
-			if (key == Key.Q)		{ChangeSymbols = true;	hasChangd = true;}
-			if (key == Key.Z)		{MoveLeft = true;		hasChangd = true;}
-			if (key == Key.X)		{MoveRight = true;		hasChangd = true;}
-			if (key == Key.Escape)	{Close = true;			hasChangd = true;}
-			if (key == Key.F12)		{Show = true;			hasChangd = true;}
+			if (key == Key.Back)	{Delete			= true;	hasChangd = true;}
+			if (key == Key.Space)	{Space			= true;	hasChangd = true;}
+			if (key == Key.E)		{ChangeCase		= true;	hasChangd = true;}
+			if (key == Key.Q)		{ChangeSymbols	= true;	hasChangd = true;}
+			if (key == Key.Z)		{MoveLeft		= true;	hasChangd = true;}
+			if (key == Key.X)		{MoveRight		= true;	hasChangd = true;}
+			if (key == Key.Escape)	{Close			= true;	hasChangd = true;}
+			if (key == Key.F12)		{Show			= true;	hasChangd = true;}
 
 			_charPos = new Vector2();
 			if (new[]{
@@ -73,10 +73,18 @@ namespace ControllerKeyboard.Input {
 		}
 
 		public void OnKeyUp(Key key){
+			var hasChangd = false;
+
+			if (key == Key.E)		{ChangeCase = false;		hasChangd = true;}
+			if (key == Key.Q)		{ChangeSymbols = false;		hasChangd = true;}
+
 			if (ActiveKeys.ContainsKey(key))
 				ActiveKeys[key] = false;
-			else return;
-			if (HandleBlocks(key) && KeyChange != null)
+
+			if (HandleBlocks(key))
+				hasChangd = true;
+
+			if (hasChangd && KeyChange != null)
 				KeyChange(this);
 		}
 
@@ -114,8 +122,8 @@ namespace ControllerKeyboard.Input {
 		}
 
 		public void ResetButtons(){
-			ChangeCase = false;
-			ChangeSymbols = false;
+			//ChangeCase = false;
+			//ChangeSymbols = false;
 			MoveLeft = false;
 			MoveRight = false;
 			Delete = false;
