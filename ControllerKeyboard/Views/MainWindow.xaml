@@ -10,6 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         ShowActivated="False"
+        
     >
     <Border Background="#FF475B9C" CornerRadius="20" BorderBrush="#FF1E316E" BorderThickness="3,3,4,4">
         <Grid>

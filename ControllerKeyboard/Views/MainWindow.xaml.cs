@@ -2,13 +2,18 @@
 
 namespace ControllerKeyboard.Views {
 	public partial class MainWindow  {
-		public MainWindow() {
+		public MainWindow(){
 			InitializeComponent();
 			Background = System.Windows.Media.Brushes.Transparent;
 			InputControl.OnKey += InputControlOnOnKey;
 			InputControl.InputSystem.KeyChange += InputSystemOnKeyChange;
 			TextBox.Text = "";
 			System.Windows.Controls.Canvas.SetLeft(Caret, 0);
+		}
+
+		protected override void OnClosed(System.EventArgs e){
+			System.Windows.Application.Current.Shutdown();
+			base.OnClosed(e);
 		}
 
 		private void InputSystemOnKeyChange(Input.IInput input) {

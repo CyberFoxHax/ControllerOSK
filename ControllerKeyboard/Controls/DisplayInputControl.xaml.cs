@@ -26,7 +26,8 @@ namespace ControllerKeyboard.Controls {
 
 		protected override void OnVisualParentChanged(DependencyObject oldParent){
 			if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
-			InputSystem = new Input.KeyboardInput(this.GetParentWindow());
+			//InputSystem = new Input.KeyboardInput(this.GetParentWindow());
+			InputSystem = new Input.GlobalKeyboardInput();
 			InputSystem.KeyChange += InputSystemOnKeyChange;
 			base.OnVisualParentChanged(oldParent);
 		}
