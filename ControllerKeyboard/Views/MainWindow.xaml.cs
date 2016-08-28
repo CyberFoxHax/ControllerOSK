@@ -11,16 +11,34 @@ namespace ControllerKeyboard.Views {
 			System.Windows.Controls.Canvas.SetLeft(Caret, 0);
 		}
 
+		private bool _isEnabled = true;
+
 		protected override void OnClosed(System.EventArgs e){
 			System.Windows.Application.Current.Shutdown();
 			base.OnClosed(e);
 		}
 
-		private void SendKey(string key){
+		private static void SendKey(string key){
 			System.Windows.Forms.SendKeys.SendWait(key);
 		}
 
 		private void InputSystemOnKeyChange(Input.IInput input) {
+			if (input.OpenClose && _isEnabled == false) {
+				((Input.GlobalKeyboardInput)input).IsEnabled = true;
+				Show();
+				_isEnabled = true;
+			}
+			else if (_isEnabled == false)
+				return;
+
+			else if (input.OpenClose && _isEnabled) {
+				((Input.GlobalKeyboardInput)input).IsEnabled = false;
+				Hide();
+				_isEnabled = false;
+				return;
+			}
+
+
 			if (input.Delete){
 				if (_caretIndex > 0 && TextBox.Text.Length > 0){
 					CaretIndex--;

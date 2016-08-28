@@ -43,8 +43,7 @@ namespace ControllerKeyboard.Input {
 			if (key == Key.Q)		{ChangeSymbols	= true;	hasChangd = true;}
 			if (key == Key.Z)		{MoveLeft		= true;	hasChangd = true;}
 			if (key == Key.X)		{MoveRight		= true;	hasChangd = true;}
-			if (key == Key.Escape)	{Close			= true;	hasChangd = true;}
-			if (key == Key.F12)		{Show			= true;	hasChangd = true;}
+			if (key == Key.F12)	{OpenClose			= true;	hasChangd = true;}
 
 			_charPos = new Vector2();
 			if (new[]{
@@ -128,8 +127,7 @@ namespace ControllerKeyboard.Input {
 			MoveRight = false;
 			Delete = false;
 			Space = false;
-			Close = false;
-			Show = false;
+			OpenClose = false;
 		}
 
 		public bool ChangeCase { get; set; }
@@ -138,7 +136,6 @@ namespace ControllerKeyboard.Input {
 		public bool MoveRight { get; set; }
 		public bool Delete { get; set; }
 		public bool Space { get; set; }
-		public bool Close { get; set; }
-		public bool Show { get; set; }
+		public bool OpenClose { get; set; }
 	}
 }

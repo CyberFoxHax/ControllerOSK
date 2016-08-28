@@ -13,7 +13,6 @@
 		bool Delete { get; set; }
 		bool Space { get; set; }
 
-		bool Close { get; set; }
-		bool Show { get; set; }
+		bool OpenClose { get; set; }
 	}
 }

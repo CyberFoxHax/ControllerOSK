@@ -9,6 +9,19 @@ namespace ControllerKeyboard.Input {
 			_globalHandle.KeyboardPressed += OnKeyEvent;
 		}
 
+		public bool IsEnabled {
+			set {
+				if (value){
+					_cancelEvent = true;
+				}
+				else{
+					_cancelEvent = false;
+				}
+			}
+		}
+
+		private bool _cancelEvent;
+
 		~GlobalKeyboardInput(){
 			_globalHandle.KeyboardPressed -= OnKeyEvent;
 		}
@@ -25,11 +38,14 @@ namespace ControllerKeyboard.Input {
 					throw new System.ArgumentOutOfRangeException();
 			}
 
-			e.Handled = true;
+			e.Handled = _cancelEvent;
 		}
 
 		public readonly Dictionary<Key, bool> ActiveKeys = new Dictionary<Key, bool>{
-			{Key.W, false}, {Key.A, false}, {Key.S, false}, {Key.D, false}
+			{Key.W, false},
+			{Key.A, false},
+			{Key.S, false},
+			{Key.D, false}
 		};
 
 		public void OnKeyDown(Key key){
@@ -61,12 +77,8 @@ namespace ControllerKeyboard.Input {
 				MoveRight = true;
 				hasChangd = true;
 			}
-			if (key == Key.Escape){
-				Close = true;
-				hasChangd = true;
-			}
 			if (key == Key.F12){
-				Show = true;
+				OpenClose = true;
 				hasChangd = true;
 			}
 
@@ -154,8 +166,7 @@ namespace ControllerKeyboard.Input {
 			MoveRight = false;
 			Delete = false;
 			Space = false;
-			Close = false;
-			Show = false;
+			OpenClose = false;
 		}
 
 		public bool ChangeCase { get; set; }
@@ -164,7 +175,7 @@ namespace ControllerKeyboard.Input {
 		public bool MoveRight { get; set; }
 		public bool Delete { get; set; }
 		public bool Space { get; set; }
-		public bool Close { get; set; }
+		public bool OpenClose { get; set; }
 		public bool Show { get; set; }
 	}
 }
