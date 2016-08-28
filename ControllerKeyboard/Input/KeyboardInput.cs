@@ -17,12 +17,12 @@ namespace ControllerKeyboard.Input {
 
 		private readonly System.Windows.FrameworkElement _elm;
 
-		private void ElmOnKeyUp(object sender, KeyEventArgs keyEventArgs){
-			OnKeyUp(keyEventArgs.Key);
+		private void ElmOnKeyUp(object sender, KeyEventArgs e){
+			OnKeyUp(e.Key);
 		}
 
-		private void ElmOnKeyDown(object sender, KeyEventArgs keyEventArgs){
-			OnKeyDown(keyEventArgs.Key);
+		private void ElmOnKeyDown(object sender, KeyEventArgs e){
+			OnKeyDown(e.Key);
 		}
 
 		public readonly Dictionary<Key, bool> ActiveKeys = new Dictionary<Key, bool>{

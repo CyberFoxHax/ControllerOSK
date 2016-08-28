@@ -16,19 +16,30 @@ namespace ControllerKeyboard.Views {
 			base.OnClosed(e);
 		}
 
+		private void SendKey(string key){
+			System.Windows.Forms.SendKeys.SendWait(key);
+		}
+
 		private void InputSystemOnKeyChange(Input.IInput input) {
-			if (input.Delete && _caretIndex > 0 && TextBox.Text.Length > 0){
-				CaretIndex--;
-				RemoveText();
+			if (input.Delete){
+				if (_caretIndex > 0 && TextBox.Text.Length > 0){
+					CaretIndex--;
+					RemoveText();
+				}
+				SendKey("{BS}");
 			}
 
 			if (input.Space)
 				InsertText(" ");
 
-			if (input.MoveLeft)
+			if (input.MoveLeft){
 				CaretIndex--;
-			else if (input.MoveRight)
+				SendKey("{LEFT}");
+			}
+			else if (input.MoveRight){
 				CaretIndex++;
+				SendKey("{RIGHT}");
+			}
 
 			if		(input.ChangeSymbols) InputControl.SwitchSymbols();
 			else if (input.ChangeCase	) InputControl.SwitchUppercase();
@@ -38,6 +49,7 @@ namespace ControllerKeyboard.Views {
 		public void InsertText(string input){
 			TextBox.Text = TextBox.Text.Insert(_caretIndex, input);
 			CaretIndex++;
+			SendKey(input);
 		}
 
 		public void RemoveText(){
@@ -46,8 +58,7 @@ namespace ControllerKeyboard.Views {
 		}
 
 		private int _caretIndex;
-		public int CaretIndex
-		{
+		public int CaretIndex {
 			get { return _caretIndex; }
 			set {
 				if(value > -1 && value < TextBox.Text.Length+1){

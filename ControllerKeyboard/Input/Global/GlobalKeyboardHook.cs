@@ -23,7 +23,7 @@ namespace ControllerKeyboard.Input.Global{
 			}
 
 
-			_windowsHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _hookProc, _user32LibraryHandle, 0);
+			_windowsHookHandle = SetWindowsHookEx(WhKeyboardLl, _hookProc, _user32LibraryHandle, 0);
 			if (_windowsHookHandle == IntPtr.Zero){
 				var errorCode = Marshal.GetLastWin32Error();
 				throw new Win32Exception(errorCode,
@@ -39,7 +39,7 @@ namespace ControllerKeyboard.Input.Global{
 					if (!UnhookWindowsHookEx(_windowsHookHandle)){
 						var errorCode = Marshal.GetLastWin32Error();
 						throw new Win32Exception(errorCode,
-							String.Format("Failed to remove keyboard hooks for '{0}'. Error {1}: {2}.",
+							string.Format("Failed to remove keyboard hooks for '{0}'. Error {1}: {2}.",
 								Process.GetCurrentProcess().ProcessName, errorCode, new Win32Exception(Marshal.GetLastWin32Error()).Message));
 					}
 					_windowsHookHandle = IntPtr.Zero;
@@ -50,8 +50,8 @@ namespace ControllerKeyboard.Input.Global{
 			}
 
 			if (_user32LibraryHandle != IntPtr.Zero){
-				if (!FreeLibrary(_user32LibraryHandle)) // reduces reference to library by 1.
-				{
+				if (FreeLibrary(_user32LibraryHandle) == false) { // reduces reference to library by 1.
+				
 					var errorCode = Marshal.GetLastWin32Error();
 					throw new Win32Exception(errorCode,
 						string.Format("Failed to unload library 'User32.dll'. Error {0}: {1}.", errorCode,
@@ -98,7 +98,7 @@ namespace ControllerKeyboard.Input.Global{
 		/// <summary>
 		/// The UnhookWindowsHookEx function removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
 		/// </summary>
-		/// <param name="hhk">handle to hook procedure</param>
+		/// <param name="hHook">handle to hook procedure</param>
 		/// <returns>If the function succeeds, the return value is true.</returns>
 		[DllImport("USER32", SetLastError = true)]
 		public static extern bool UnhookWindowsHookEx(IntPtr hHook);
@@ -113,9 +113,9 @@ namespace ControllerKeyboard.Input.Global{
 		/// <param name="lParam">value passed to hook procedure</param>
 		/// <returns>If the function succeeds, the return value is true.</returns>
 		[DllImport("USER32", SetLastError = true)]
-		static extern IntPtr CallNextHookEx(IntPtr hHook, int code, IntPtr wParam, IntPtr lParam);
+		private static extern IntPtr CallNextHookEx(IntPtr hHook, int code, IntPtr wParam, IntPtr lParam);
 
-		public const int WH_KEYBOARD_LL = 13;
+		public const int WhKeyboardLl = 13;
 
 		public IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam){
 			var fEatKeyStroke = false;
@@ -127,13 +127,15 @@ namespace ControllerKeyboard.Input.Global{
 
 				var eventArguments = new GlobalKeyboardHookEventArgs(p, (KeyboardState) wparamTyped);
 
-				var handler = KeyboardPressed;
-				if (handler != null) handler.Invoke(this, eventArguments);
+				if (KeyboardPressed != null)
+					KeyboardPressed.Invoke(this, eventArguments);
 
 				fEatKeyStroke = eventArguments.Handled;
 			}
 
-			return fEatKeyStroke ? (IntPtr) 1 : CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
+			if (fEatKeyStroke)
+				return (IntPtr) 1;
+			return CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
 		}
 	}
 }

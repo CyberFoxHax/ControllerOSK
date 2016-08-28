@@ -22,14 +22,12 @@ namespace ControllerKeyboard.Controls {
 				children[c].SetChars(seq.Substring(i, 4));
 
 			SetBlock(children[4]);
-		}
 
-		protected override void OnVisualParentChanged(DependencyObject oldParent){
 			if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
-			//InputSystem = new Input.KeyboardInput(this.GetParentWindow());
 			InputSystem = new Input.GlobalKeyboardInput();
+			InputSystem.KeyChange -= InputSystemOnKeyChange;
 			InputSystem.KeyChange += InputSystemOnKeyChange;
-			base.OnVisualParentChanged(oldParent);
+
 		}
 
 		private readonly InputBlock[,] _elmGrid;

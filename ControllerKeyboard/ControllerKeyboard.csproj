@@ -49,8 +49,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net45\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -95,7 +99,6 @@
     <Compile Include="Input\Global\Key.cs" />
     <Compile Include="Input\Global\KeyboardState.cs" />
     <Compile Include="Input\Global\LowLevelKeyboardInputEvent.cs" />
-    <Compile Include="Input\Global\Controller.cs" />
     <Compile Include="Input\IInput.cs" />
     <Compile Include="Input\KeyboardInput.cs" />
     <Compile Include="Input\Global\GlobalKeyboardHook.cs" />
@@ -124,6 +127,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
