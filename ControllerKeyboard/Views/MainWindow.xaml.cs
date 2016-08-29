@@ -91,5 +91,20 @@ namespace ControllerKeyboard.Views {
 		private void InputControlOnOnKey(char c){
 			InsertText(c.ToString());
 		}
+
+		private void MenuItem_OnClick(object sender, System.Windows.RoutedEventArgs e) {
+			if (_isEnabled) {
+				Hide();
+				_isEnabled = false;
+			}
+			else {
+				Show();
+				_isEnabled = true;
+			}
+		}
+
+		private void MenuItemExit_OnClick(object sender, System.Windows.RoutedEventArgs e){
+			Close();
+		}
 	}
 }

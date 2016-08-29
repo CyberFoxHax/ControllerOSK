@@ -16,7 +16,10 @@
         
     >
     <Window.Resources>
-        <ContextMenu x:Key="TrayMenu" />
+        <ContextMenu x:Key="TrayMenu">
+            <MenuItem Header="Show/Hide" Click="MenuItem_OnClick"></MenuItem>
+            <MenuItem Header="Exit" Click="MenuItemExit_OnClick"></MenuItem>
+        </ContextMenu>
     </Window.Resources>
     <Border Background="#FF475B9C" CornerRadius="20" BorderBrush="#FF1E316E" BorderThickness="3,3,4,4">
         <Grid>
@@ -26,10 +29,12 @@
             </Grid.RowDefinitions>
             <tb:TaskbarIcon x:Name="NotifyIcon"
                     Visibility="Visible"
-                    ToolTipText="Fallback ToolTip for Windows xp"
+                    ToolTipText="ControllerOSK"
                     ContextMenu="{StaticResource TrayMenu}"
+                    IconSource="/ControllerKeyboard;component/Resources/icon.ico"
                     MenuActivation="LeftOrRightClick"
-                    PopupActivation="DoubleClick" />
+                    PopupActivation="DoubleClick" 
+                    ToolTip="ControllerOSK" />
             <controls:DisplayInputControl Grid.Row="0" x:Name="InputControl" Margin="141,0,160,84" Background="CornflowerBlue" />
             <Border Grid.Row="0" x:Name="InpuContainer" Background="White" Height="69" VerticalAlignment="Bottom" CornerRadius="10" Margin="21,0,19,15" BorderThickness="3" BorderBrush="#999">
                 <Grid>
