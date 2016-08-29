@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-
+﻿
 namespace ControllerKeyboard.Views {
 	public partial class MainWindow  {
 		public MainWindow(){
@@ -34,10 +33,11 @@ namespace ControllerKeyboard.Views {
 			else if (input.OpenClose && _isEnabled) {
 				((Input.GlobalKeyboardInput)input).IsEnabled = false;
 				Hide();
+				ResetText();
+				InvalidateVisual();
 				_isEnabled = false;
 				return;
 			}
-
 
 			if (input.Delete){
 				if (_caretIndex > 0 && TextBox.Text.Length > 0){
@@ -50,6 +50,9 @@ namespace ControllerKeyboard.Views {
 			if (input.Space)
 				InsertText(" ");
 
+			if(input.Return)
+				SendKey("{ENTER}");
+
 			if (input.MoveLeft){
 				CaretIndex--;
 				SendKey("{LEFT}");
@@ -59,15 +62,22 @@ namespace ControllerKeyboard.Views {
 				SendKey("{RIGHT}");
 			}
 
+
 			if		(input.ChangeSymbols) InputControl.SwitchSymbols();
 			else if (input.ChangeCase	) InputControl.SwitchUppercase();
 			else InputControl.SwitchLowercase();
 		}
 
-		public void InsertText(string input){
+		public void ResetText(){
+			TextBox.Text = "";
+			CaretIndex = 0;
+		}
+
+		public void InsertText(string input, bool send = true){
 			TextBox.Text = TextBox.Text.Insert(_caretIndex, input);
 			CaretIndex++;
-			SendKey(input);
+			if(send)
+				SendKey(input);
 		}
 
 		public void RemoveText(){
@@ -84,7 +94,7 @@ namespace ControllerKeyboard.Views {
 					TextBox.CaretIndex = value;
 					var rect = TextBox.GetRectFromCharacterIndex(value);
 					System.Windows.Controls.Canvas.SetLeft(Caret, rect.X);
-				};
+				}
 			}
 		}
 
@@ -105,6 +115,11 @@ namespace ControllerKeyboard.Views {
 
 		private void MenuItemExit_OnClick(object sender, System.Windows.RoutedEventArgs e){
 			Close();
+		}
+
+		private void MainWindow_OnMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e){
+			if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+				DragMove();
 		}
 	}
 }

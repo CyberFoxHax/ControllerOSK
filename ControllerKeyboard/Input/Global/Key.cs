@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ControllerKeyboard.Input.Global {
 	public enum Key {
 		Back	= 0x08,
@@ -21,6 +16,7 @@ namespace ControllerKeyboard.Input.Global {
 		W		= 0x57,
 		A		= 0x41,
 		S		= 0x53,
-		D		= 0x44
+		D		= 0x44,
+		Enter	= 0x0d
 	}
 }

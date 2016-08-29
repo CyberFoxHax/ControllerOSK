@@ -20,7 +20,7 @@ namespace ControllerKeyboard.Input {
 			}
 		}
 
-		private bool _cancelEvent;
+		private bool _cancelEvent = true;
 
 		~GlobalKeyboardInput(){
 			_globalHandle.KeyboardPressed -= OnKeyEvent;
@@ -37,8 +37,8 @@ namespace ControllerKeyboard.Input {
 				default:
 					throw new System.ArgumentOutOfRangeException();
 			}
-
-			e.Handled = _cancelEvent;
+			if (System.Enum.IsDefined(typeof (Key), e.KeyboardData.VirtualCode))
+				e.Handled = _cancelEvent;
 		}
 
 		public readonly Dictionary<Key, bool> ActiveKeys = new Dictionary<Key, bool>{
@@ -53,34 +53,14 @@ namespace ControllerKeyboard.Input {
 
 			var hasChangd = false;
 
-			if (key == Key.Back){
-				Delete = true;
-				hasChangd = true;
-			}
-			if (key == Key.Space){
-				Space = true;
-				hasChangd = true;
-			}
-			if (key == Key.E){
-				ChangeCase = true;
-				hasChangd = true;
-			}
-			if (key == Key.Q){
-				ChangeSymbols = true;
-				hasChangd = true;
-			}
-			if (key == Key.Z){
-				MoveLeft = true;
-				hasChangd = true;
-			}
-			if (key == Key.X){
-				MoveRight = true;
-				hasChangd = true;
-			}
-			if (key == Key.F12){
-				OpenClose = true;
-				hasChangd = true;
-			}
+			if (key == Key.Back)	{Delete			= true;	hasChangd = true;}
+			if (key == Key.Space)	{Space			= true;	hasChangd = true;}
+			if (key == Key.E)		{ChangeSymbols	= true;	hasChangd = true;}
+			if (key == Key.Q)		{ChangeCase		= true;	hasChangd = true;}
+			if (key == Key.Z)		{MoveLeft		= true;	hasChangd = true;}
+			if (key == Key.X)		{MoveRight		= true;	hasChangd = true;}
+			if (key == Key.F12)		{OpenClose		= true;	hasChangd = true;}
+			if (key == Key.Enter)	{Return			= true;	hasChangd = true;}
 
 			_charPos = new Vector2();
 			if (new[]{
@@ -108,14 +88,8 @@ namespace ControllerKeyboard.Input {
 		public void OnKeyUp(Key key){
 			var hasChangd = false;
 
-			if (key == Key.E){
-				ChangeCase = false;
-				hasChangd = true;
-			}
-			if (key == Key.Q){
-				ChangeSymbols = false;
-				hasChangd = true;
-			}
+			if (key == Key.Q){ ChangeCase	 = false; hasChangd = true; }
+			if (key == Key.E){ ChangeSymbols = false; hasChangd = true; }
 
 			if (ActiveKeys.ContainsKey(key))
 				ActiveKeys[key] = false;
@@ -175,6 +149,7 @@ namespace ControllerKeyboard.Input {
 		public bool MoveRight { get; set; }
 		public bool Delete { get; set; }
 		public bool Space { get; set; }
+		public bool Return { get; set; }
 		public bool OpenClose { get; set; }
 		public bool Show { get; set; }
 	}

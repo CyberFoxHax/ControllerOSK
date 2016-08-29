@@ -69,6 +69,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="XInput.Wrapper">
+      <HintPath>..\packages\XInput.Wrapper.0.3.1\lib\net40\XInput.Wrapper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -103,6 +106,7 @@
     <Compile Include="Input\Global\KeyboardState.cs" />
     <Compile Include="Input\Global\LowLevelKeyboardInputEvent.cs" />
     <Compile Include="Input\IInput.cs" />
+    <Compile Include="Input\JoystickInput.cs" />
     <Compile Include="Input\KeyboardInput.cs" />
     <Compile Include="Input\Global\GlobalKeyboardHook.cs" />
     <Compile Include="Utils.cs" />

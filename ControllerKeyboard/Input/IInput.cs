@@ -12,6 +12,7 @@
 		bool MoveRight { get; set; }
 		bool Delete { get; set; }
 		bool Space { get; set; }
+		bool Return { get; set; }
 
 		bool OpenClose { get; set; }
 	}

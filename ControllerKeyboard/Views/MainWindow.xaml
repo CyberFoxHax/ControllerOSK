@@ -13,7 +13,7 @@
         ShowActivated="False"
         Topmost="True"
         ShowInTaskbar="False"
-        
+        MouseDown="MainWindow_OnMouseDown"
     >
     <Window.Resources>
         <ContextMenu x:Key="TrayMenu">
@@ -61,6 +61,14 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Horizontal.png" />
                 <TextBlock Text="Move caret" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
+            </Grid>
+            <Grid Grid.Row="1" Margin="461,0,77,32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Source="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Down.png" />
+                <TextBlock Text="Return" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
             </Grid>
             <Grid Grid.Row="1" Margin="0,0,543,32">
                 <Grid.ColumnDefinitions>
