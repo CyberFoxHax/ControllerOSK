@@ -4,8 +4,8 @@ using XInput.Wrapper;
 namespace ControllerKeyboard.Input {
 	public class JoystickInput : IInput {
 		public JoystickInput(){
-			if (X.IsAvailable == false)
-				throw new System.Exception("XInput is unavailable");
+			//if (X.IsAvailable == false)
+			//	throw new System.Exception("XInput is unavailable");
 
 			_gamepad = X.Gamepad_1;
 			_gamepad.StateChanged += GamepadOnStateChanged;

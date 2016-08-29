@@ -121,5 +121,11 @@ namespace ControllerKeyboard.Views {
 			if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
 				DragMove();
 		}
+
+		private void KeyboardHook_OnClick(object sender, System.Windows.RoutedEventArgs e){
+		}
+
+		private void XInput_OnClick(object sender, System.Windows.RoutedEventArgs e){
+		}
 	}
 }

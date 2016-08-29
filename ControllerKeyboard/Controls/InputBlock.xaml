@@ -4,18 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="73" d:DesignWidth="72" Background="Gray" BorderThickness="2" BorderBrush="BlueViolet"> 
+             d:DesignHeight="100" d:DesignWidth="100" >
+    <Grid>
     <Grid x:Name="Grid">
-        <Grid.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="FontSize"             Value="30"    />
-                <Setter Property="FontWeight"           Value="Black" />
-                <Setter Property="HorizontalAlignment"  Value="Center"/>
-                <Setter Property="VerticalAlignment"    Value="Center"/>
-                <Setter Property="Foreground"           Value="White"/>
-            </Style>
-            
-        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -26,9 +17,10 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="A" Grid.Column="1" Grid.Row="0" />
-        <TextBlock Text="B" Grid.Column="0" Grid.Row="1" />
-        <TextBlock Text="C" Grid.Column="2" Grid.Row="1" />
-        <TextBlock Text="D" Grid.Column="1" Grid.Row="2" />
+        <Viewbox Grid.Column="1" Grid.Row="0"><TextBlock x:Name="Txt1" Text="A" /></Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="1"><TextBlock x:Name="Txt2" Text="B" /></Viewbox>
+        <Viewbox Grid.Column="2" Grid.Row="1"><TextBlock x:Name="Txt3" Text="C" /></Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="2"><TextBlock x:Name="Txt4" Text="D" /></Viewbox>
+    </Grid>
     </Grid>
 </Border>

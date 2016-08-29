@@ -1,21 +1,31 @@
-﻿using System.Linq;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using System.Windows;
 
 namespace ControllerKeyboard.Controls {
 	public partial class InputBlock {
 		public InputBlock() {
 			InitializeComponent();
-			Background = null;
-			_elms = Grid.Children.OfType<TextBlock>().ToArray();
+			_elms = new []{ Txt1, Txt2, Txt3, Txt4 };
+		}
+
+		public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
+			"IsActive",
+			typeof (bool),
+			typeof (InputBlock),
+			new PropertyMetadata(default(bool))
+		);
+
+		public bool IsActive {
+			get { return (bool) GetValue(IsActiveProperty); }
+			set { SetValue(IsActiveProperty, value); }
 		}
 
 		private readonly TextBlock[] _elms;
 
 		public void SetChars(string str){
-			var controls = Grid.Children.OfType<TextBlock>().ToArray();
-			for (var i = 0; i < str.Length; i++){
+			var controls = _elms;
+			for (var i = 0; i < str.Length; i++)
 				controls[i].Text = str[i].ToString();
-			}
 		}
 
 		public char GetStr(int x, int y){

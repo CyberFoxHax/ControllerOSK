@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ImageLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\InputBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +100,9 @@
     </Compile>
     <Compile Include="Controls\DisplayInputControl.xaml.cs">
       <DependentUpon>DisplayInputControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageLabel.xaml.cs">
+      <DependentUpon>ImageLabel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputBlock.xaml.cs">
       <DependentUpon>InputBlock.xaml</DependentUpon>
@@ -187,6 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\BackgroudFlower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\active.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

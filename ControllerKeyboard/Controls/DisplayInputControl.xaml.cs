@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
-using System.Windows.Media;
 
 namespace ControllerKeyboard.Controls {
 	public partial class DisplayInputControl  {
@@ -10,7 +8,6 @@ namespace ControllerKeyboard.Controls {
 			Background = null;
 
 			var children = Children.OfType<InputBlock>().ToArray();
-			
 
 			_elmGrid = new InputBlock[3,3];
 			for (int y = 0, i = 0;	y < 3; y++)
@@ -31,19 +28,21 @@ namespace ControllerKeyboard.Controls {
 		}
 
 		private readonly InputBlock[,] _elmGrid;
-
+		private InputBlock _activeElement;
 		public Input.IInput InputSystem { get; private set; }
-		public Brush ActiveBrush = Brushes.Orange;
 
 		private void SetBlock(InputBlock elm){
 			if (_activeElement != null)
-				_activeElement.Background = null;
+				_activeElement.IsActive = false;
 
 			_activeElement = elm;
-			elm.Background = ActiveBrush;
+			elm.IsActive = true;
 		}
 
-		private InputBlock _activeElement;
+
+		private System.Windows.Controls.UIElementCollection Children {
+			get { return Wrapper.Children; }
+		}
 
 		public void SwitchUppercase() {
 			var children = Children.OfType<InputBlock>().ToArray();
