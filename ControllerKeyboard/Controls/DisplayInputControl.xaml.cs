@@ -104,7 +104,7 @@ namespace ControllerKeyboard.Controls {
 
 		private const string QwertySequence =
 			"1qew" + "2ryt" + "3uoi" +
-			"4psa" + "5dgf" + "6hkj" +
-			"7lxz" + "8cbv" + "9n0m";
+			"4ads" + "5fhg" + "6jlk" +
+			"7zcx" + "8vnb" + "9m0p";
 	}
 }
