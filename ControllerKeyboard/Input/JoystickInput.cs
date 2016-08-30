@@ -161,6 +161,7 @@ namespace ControllerKeyboard.Input {
 			MoveLeft = false;
 			MoveRight = false;
 			Delete = false;
+			Return = false;
 			Space = false;
 			OpenClose = false;
 		}

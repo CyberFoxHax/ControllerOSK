@@ -1,4 +1,6 @@
 ﻿
+using System.Linq;
+
 namespace ControllerKeyboard.Views {
 	public partial class MainWindow  {
 		public MainWindow(){
@@ -22,6 +24,11 @@ namespace ControllerKeyboard.Views {
 		}
 
 		private static void SendKey(string key){
+			if(key.Length == 1)
+				foreach (var c in "+^%~(){}".Where(c => key.Contains(c))){
+					key = key.Replace(c.ToString(), "{" + c + "}");
+					break;
+				}
 			System.Windows.Forms.SendKeys.SendWait(key);
 		}
 
