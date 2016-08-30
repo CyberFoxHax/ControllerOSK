@@ -14,6 +14,11 @@ namespace ControllerKeyboard.Views {
 			};
 			TextBox.Text = "";
 			System.Windows.Controls.Canvas.SetLeft(Caret, 0);
+			Loaded += OnLoaded;
+		}
+
+		private void OnLoaded(object sender, System.Windows.RoutedEventArgs routedEventArgs){
+			MenuItem_OnClick(null, null);
 		}
 
 		private bool _isEnabled = true;
