@@ -9,15 +9,12 @@ namespace ControllerKeyboard.Input {
 			_globalHandle.KeyboardPressed += OnKeyEvent;
 		}
 
-		public bool IsEnabled {
-			set {
-				if (value){
-					_cancelEvent = true;
-				}
-				else{
-					_cancelEvent = false;
-				}
-			}
+		public void Enable() {
+			_cancelEvent = true;
+		}
+
+		public void Disable() {
+			_cancelEvent = false;
 		}
 
 		private bool _cancelEvent = true;

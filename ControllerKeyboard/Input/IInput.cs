@@ -2,6 +2,9 @@
 	public interface IInput{
 		event System.Action<IInput> KeyChange;
 
+		void Enable();
+		void Disable();
+
 		Vector2 BlockPos { get; set; }
 		Vector2 CharPos { get; set; }
 

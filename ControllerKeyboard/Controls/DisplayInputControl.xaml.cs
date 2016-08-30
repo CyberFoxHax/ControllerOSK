@@ -21,7 +21,7 @@ namespace ControllerKeyboard.Controls {
 			SetBlock(children[4]);
 
 			if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
-			InputSystem = new Input.GlobalKeyboardInput();
+			InputSystem = new Input.JoystickInput();
 			InputSystem.KeyChange -= InputSystemOnKeyChange;
 			InputSystem.KeyChange += InputSystemOnKeyChange;
 
@@ -65,19 +65,21 @@ namespace ControllerKeyboard.Controls {
 				children[c].SetChars(seq.Substring(i, 4));
 		}
 
-		private void InputSystemOnKeyChange(Input.IInput obj) {
-			SetBlock(_elmGrid[
-				(int) (-obj.BlockPos.X + 1),
-				(int) (-obj.BlockPos.Y + 1)
-			]);
+		private void InputSystemOnKeyChange(Input.IInput obj){
+			Dispatcher.Invoke(() =>{
+				SetBlock(_elmGrid[
+					(int)(-obj.BlockPos.X + 1),
+					(int)(-obj.BlockPos.Y + 1)
+				]);
 
-			if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f){
-				var c = _activeElement.GetStr(
-					(int) obj.CharPos.X,
-					(int) -obj.CharPos.Y
-				);
-				if (OnKey != null) OnKey(c);
-			}
+				if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f) {
+					var c = _activeElement.GetStr(
+						(int)obj.CharPos.X,
+						(int)-obj.CharPos.Y
+					);
+					if (OnKey != null) OnKey(c);
+				}
+			});
 		}
 
 		public event Action<char> OnKey;

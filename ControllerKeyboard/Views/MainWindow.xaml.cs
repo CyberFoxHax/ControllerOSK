@@ -5,7 +5,11 @@ namespace ControllerKeyboard.Views {
 			InitializeComponent();
 			Background = System.Windows.Media.Brushes.Transparent;
 			InputControl.OnKey += InputControlOnOnKey;
-			InputControl.InputSystem.KeyChange += InputSystemOnKeyChange;
+			InputControl.InputSystem.KeyChange += input =>{
+				Dispatcher.Invoke(() =>{
+					InputSystemOnKeyChange(input);
+				});
+			};
 			TextBox.Text = "";
 			System.Windows.Controls.Canvas.SetLeft(Caret, 0);
 		}
@@ -23,7 +27,7 @@ namespace ControllerKeyboard.Views {
 
 		private void InputSystemOnKeyChange(Input.IInput input) {
 			if (input.OpenClose && _isEnabled == false) {
-				((Input.GlobalKeyboardInput)input).IsEnabled = true;
+				input.Enable();
 				Show();
 				_isEnabled = true;
 			}
@@ -31,7 +35,7 @@ namespace ControllerKeyboard.Views {
 				return;
 
 			else if (input.OpenClose && _isEnabled) {
-				((Input.GlobalKeyboardInput)input).IsEnabled = false;
+				input.Disable();
 				Hide();
 				ResetText();
 				InvalidateVisual();
@@ -104,10 +108,14 @@ namespace ControllerKeyboard.Views {
 
 		private void MenuItem_OnClick(object sender, System.Windows.RoutedEventArgs e) {
 			if (_isEnabled) {
+				InputControl.InputSystem.Disable();
 				Hide();
+				ResetText();
+				InvalidateVisual();
 				_isEnabled = false;
 			}
 			else {
+				InputControl.InputSystem.Enable();
 				Show();
 				_isEnabled = true;
 			}

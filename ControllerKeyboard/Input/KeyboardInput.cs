@@ -6,13 +6,21 @@ namespace ControllerKeyboard.Input {
 	public class KeyboardInput : IInput {
 		public KeyboardInput(System.Windows.FrameworkElement elm){
 			_elm = elm;
-			elm.KeyDown += ElmOnKeyDown;
-			elm.KeyUp   += ElmOnKeyUp;
+			Enable();
 		}
 
 		~KeyboardInput(){
-			_elm.KeyDown -= ElmOnKeyDown;
-			_elm.KeyUp   -= ElmOnKeyUp;
+			Disable();
+		}
+
+		public void Enable() {
+			_elm.KeyDown += ElmOnKeyDown;
+			_elm.KeyUp += ElmOnKeyUp;
+		}
+
+		public void Disable() {
+			_elm.KeyDown += ElmOnKeyDown;
+			_elm.KeyUp += ElmOnKeyUp;
 		}
 
 		private readonly System.Windows.FrameworkElement _elm;

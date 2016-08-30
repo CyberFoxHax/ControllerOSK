@@ -1,19 +1,101 @@
-﻿using System.Linq;
-using XInput.Wrapper;
+﻿
+using System.Linq;
+using XInputDotNetPure;
 
 namespace ControllerKeyboard.Input {
 	public class JoystickInput : IInput {
 		public JoystickInput(){
-			//if (X.IsAvailable == false)
-			//	throw new System.Exception("XInput is unavailable");
+			Enable();
 
-			_gamepad = X.Gamepad_1;
-			_gamepad.StateChanged += GamepadOnStateChanged;
-			X.StartPolling(_gamepad);
+			_isRunning = true;
+			new System.Threading.Thread(Poll).Start();
 		}
 
 		~JoystickInput(){
-			X.StopPolling();
+			_isRunning = false;
+		}
+
+		private bool _isActive;
+
+		public void Enable(){
+			_isActive = true;
+		}
+
+		public void Disable(){
+			_isActive = false;
+		}
+
+		private static readonly PlayerIndex[] PlayerIndices = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
+
+		readonly GamePadState[] _gamePadStates = new GamePadState[4];
+		readonly uint[] _lastPacketNumbers = new uint[4];
+		public int LastActivePlayerIndex;
+
+		public GamePadDeadZone DeadZone { get; set; }
+		public int LastActiveIndex { get { return LastActivePlayerIndex; } }
+		public GamePadState LastActiveState { get { return _gamePadStates[LastActivePlayerIndex]; } }
+		public bool LinkTriggersToVibration { get; set; }
+
+		public static bool GamePadStateEquals(GamePadState a, GamePadState b){
+			const float tolerance = 0.01f;
+			return
+				a.Buttons.LeftShoulder	== b.Buttons.LeftShoulder	 && 
+				a.Buttons.A				== b.Buttons.A				 &&
+				a.Buttons.B				== b.Buttons.B				 &&
+				a.Buttons.Back			== b.Buttons.Back			 &&
+				a.Buttons.Guide			== b.Buttons.Guide			 &&
+				a.Buttons.LeftShoulder	== b.Buttons.LeftShoulder	 &&
+				a.Buttons.LeftStick		== b.Buttons.LeftStick		 &&
+				a.Buttons.RightShoulder	== b.Buttons.RightShoulder	 &&
+				a.Buttons.RightStick	== b.Buttons.RightStick		 &&
+				a.Buttons.Start			== b.Buttons.Start			 &&
+				a.Buttons.X				== b.Buttons.X				 &&
+				a.Buttons.Y				== b.Buttons.Y				 &&
+				a.DPad.Left				== b.DPad.Left				 &&
+				a.DPad.Right			== b.DPad.Right				 &&
+				a.DPad.Up				== b.DPad.Up				 &&
+				a.DPad.Down				== b.DPad.Down				 &&
+				System.Math.Abs(a.ThumbSticks.Left.X	- b.ThumbSticks.Left.X	) < tolerance &&
+				System.Math.Abs(a.ThumbSticks.Left.Y	- b.ThumbSticks.Left.Y	) < tolerance &&
+				System.Math.Abs(a.ThumbSticks.Right.X	- b.ThumbSticks.Right.X	) < tolerance &&
+				System.Math.Abs(a.ThumbSticks.Right.Y	- b.ThumbSticks.Right.Y	) < tolerance &&
+				System.Math.Abs(a.Triggers.Left			- b.Triggers.Left		) < tolerance &&
+				System.Math.Abs(a.Triggers.Right		- b.Triggers.Right		) < tolerance
+			;
+		}
+
+		private void Poll(){
+			var oldGamePadStates = new GamePadState[4];
+			while (_isRunning){
+				var hasChanged = false;
+
+				for (var i = 0; i < 4; i++){
+					oldGamePadStates[i] = _gamePadStates[i];
+					_gamePadStates[i] = GamePad.GetState(PlayerIndices[i], GamePadDeadZone.Circular);
+
+					if (GamePadStateEquals(oldGamePadStates[i], _gamePadStates[i]) == false)
+						hasChanged = true;
+				}
+
+				var activePlayerIndex = LastActivePlayerIndex;
+				for (var i = 0; i < 4; i++){
+					if (_gamePadStates[i].PacketNumber == _lastPacketNumbers[i])
+						continue;
+					activePlayerIndex = i;
+					_lastPacketNumbers[i] = _gamePadStates[i].PacketNumber;
+				}
+
+				LastActivePlayerIndex = activePlayerIndex;
+
+				if (_isActive == false){
+					if (hasChanged && LastActiveState.Buttons.Back == ButtonState.Pressed)
+						GamepadOnStateChanged(null, null);
+				}
+				else if(hasChanged)
+					GamepadOnStateChanged(null, null);
+
+				System.Threading.Thread.Sleep(16);
+			}
 		}
 
 		private void GamepadOnStateChanged(object sender, System.EventArgs eventArgs){
@@ -22,49 +104,60 @@ namespace ControllerKeyboard.Input {
 
 			_charPos = new Vector2();
 			if (new[]{
-				_gamepad.A_down,
-				_gamepad.B_down,
-				_gamepad.X_down,
-				_gamepad.Y_down
+				LastActiveState.Buttons.A == ButtonState.Pressed,
+				LastActiveState.Buttons.B == ButtonState.Pressed,
+				LastActiveState.Buttons.X == ButtonState.Pressed,
+				LastActiveState.Buttons.Y == ButtonState.Pressed
 			}.Any(p => p)) {
 				hasChanged = true;
-				if (_gamepad.Y_down) _charPos.Y = 1;
-				if (_gamepad.B_down) _charPos.X = 1;
-				if (_gamepad.A_down) _charPos.Y = -1;
-				if (_gamepad.X_down) _charPos.X = -1;
+				if (LastActiveState.Buttons.Y == ButtonState.Pressed) _charPos.Y = 1;
+				if (LastActiveState.Buttons.X == ButtonState.Pressed) _charPos.X = 1;
+				if (LastActiveState.Buttons.A == ButtonState.Pressed) _charPos.Y = -1;
+				if (LastActiveState.Buttons.B == ButtonState.Pressed) _charPos.X = -1;
 			}
-
-			if (_gamepad.LBumper_down	) { Delete		= true; hasChanged = true; }
-			if (_gamepad.RBumper_down	) { Space		= true; hasChanged = true; }
-			if (_gamepad.Dpad_Left_down ) { MoveLeft	= true; hasChanged = true; } // todo analogue move
-			if (_gamepad.Dpad_Right_down) { MoveRight	= true; hasChanged = true; } // todo analogue move
-			if (_gamepad.Back_down		) { OpenClose	= true; hasChanged = true; }
-			if (_gamepad.Dpad_Down_down	) { Return		= true; hasChanged = true; }
-
-			const float triggerThreshhold = 0.1f;
-			if (_gamepad.RTrigger_N > triggerThreshhold) { ChangeCase	 = true; hasChanged = true; }
-			if (_gamepad.RTrigger_N > triggerThreshhold) { ChangeSymbols = true; hasChanged = true; }
-
+			
+			if (LastActiveState.Buttons.LeftShoulder  == ButtonState.Pressed) { Delete	= true; hasChanged = true; }
+			if (LastActiveState.Buttons.RightShoulder == ButtonState.Pressed) { Space	= true; hasChanged = true; }
+			if (LastActiveState.DPad.Left		== ButtonState.Pressed) { MoveLeft	= true; hasChanged = true; } // todo analogue move
+			if (LastActiveState.DPad.Right		== ButtonState.Pressed) { MoveRight = true; hasChanged = true; } // todo analogue move
+			if (LastActiveState.Buttons.Back	== ButtonState.Pressed) { OpenClose = true; hasChanged = true; }
+			if (LastActiveState.DPad.Down		== ButtonState.Pressed) { Return	= true; hasChanged = true; }
+			
+			const float triggerThreshhold = 0.01f;
+			if (LastActiveState.Triggers.Left  > triggerThreshhold) { ChangeCase	= true; hasChanged = true; }
+			if (LastActiveState.Triggers.Right > triggerThreshhold) { ChangeSymbols = true; hasChanged = true; }
+			
 			if (HandleBlocks())
 				hasChanged = true;
-
+			
 			if (hasChanged && KeyChange != null)
 				KeyChange(this);
 		}
 
 		private bool HandleBlocks(){
-			var lstick = _gamepad.LStick_N;
-			const double tolerance = 0.01;
+			var lstick = LastActiveState.ThumbSticks.Left;
+			const double tolerance = 0.0;
 			if (System.Math.Abs(lstick.X) < tolerance && System.Math.Abs(lstick.Y) < tolerance)
 				return false;
 
-			_blockPos = new Vector2(lstick.X, lstick.Y);
+			const float mult = 10f;
+			_blockPos = new Vector2(
+				-lstick.X * mult,
+				lstick.Y * mult
+			);
+
+			if (_blockPos.X > 1) _blockPos.X = 1;
+			else if (_blockPos.X < -1) _blockPos.X = -1;
+
+			if (_blockPos.Y > 1) _blockPos.Y = 1;
+			else if (_blockPos.Y < -1) _blockPos.Y = -1;
+
 			return true;
 		}
 
 		public void ResetButtons() {
-			//ChangeCase = false;
-			//ChangeSymbols = false;
+			ChangeCase = false;
+			ChangeSymbols = false;
 			MoveLeft = false;
 			MoveRight = false;
 			Delete = false;
@@ -74,7 +167,7 @@ namespace ControllerKeyboard.Input {
 
 		private Vector2 _blockPos;
 		private Vector2 _charPos;
-		private readonly X.Gamepad _gamepad;
+		private bool _isRunning;
 		public event System.Action<IInput> KeyChange;
 
 		public Vector2 BlockPos {
