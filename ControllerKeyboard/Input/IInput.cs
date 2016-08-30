@@ -4,6 +4,7 @@
 
 		void Enable();
 		void Disable();
+		void Dispose();
 
 		Vector2 BlockPos { get; set; }
 		Vector2 CharPos { get; set; }

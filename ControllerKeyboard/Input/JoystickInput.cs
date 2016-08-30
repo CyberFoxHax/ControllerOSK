@@ -25,6 +25,11 @@ namespace ControllerKeyboard.Input {
 			_isActive = false;
 		}
 
+		public void Dispose() {
+			_isActive = false;
+			_isRunning = false;
+		}
+
 		private static readonly PlayerIndex[] PlayerIndices = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
 
 		readonly GamePadState[] _gamePadStates = new GamePadState[4];

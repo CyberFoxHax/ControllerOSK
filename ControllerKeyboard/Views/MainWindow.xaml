@@ -70,10 +70,6 @@
                             </Canvas>
                         </Grid>
                     </Border>
-
-                    <controls:ImageLabel Grid.Row="1" Margin="306,0,232,32"
-                        ImageSource="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Horizontal.png"
-                        Text="Move caret" />
                     <controls:ImageLabel Grid.Row="1" Margin="461,0,77,32"
                         ImageSource="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Down.png"
                         Text="Return" />
@@ -89,6 +85,12 @@
                     <controls:ImageLabel Margin="161,32,392,0" Grid.Row="1"
                         ImageSource="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_RB.png"
                         Text="Space"/>
+                    <controls:ImageLabel Margin="595,32,0,0" Grid.Row="1"
+                        ImageSource="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Windows.png"
+                        Text="Show/Hide"/>
+                    <controls:ImageLabel Grid.Row="1" Margin="306,0,232,32"
+                    	ImageSource="/ControllerKeyboard;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Horizontal.png"
+                    	Text="Move caret" />
                 </Grid>
             </Border>
         </Grid>

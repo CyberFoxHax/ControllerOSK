@@ -23,6 +23,10 @@ namespace ControllerKeyboard.Input {
 			_elm.KeyUp += ElmOnKeyUp;
 		}
 
+		public void Dispose(){
+			Disable();
+		}
+
 		private readonly System.Windows.FrameworkElement _elm;
 
 		private void ElmOnKeyUp(object sender, KeyEventArgs e){

@@ -17,6 +17,11 @@ namespace ControllerKeyboard.Input {
 			_cancelEvent = false;
 		}
 
+		public void Dispose() {
+			_cancelEvent = false;
+			_globalHandle.KeyboardPressed -= OnKeyEvent;
+		}
+
 		private bool _cancelEvent = true;
 
 		~GlobalKeyboardInput(){

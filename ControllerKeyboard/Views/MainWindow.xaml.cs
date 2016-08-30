@@ -24,6 +24,7 @@ namespace ControllerKeyboard.Views {
 		private bool _isEnabled = true;
 
 		protected override void OnClosed(System.EventArgs e){
+			InputControl.InputSystem.Dispose();
 			System.Windows.Application.Current.Shutdown();
 			base.OnClosed(e);
 		}
