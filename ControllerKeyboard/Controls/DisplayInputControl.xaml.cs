@@ -103,8 +103,8 @@ namespace ControllerKeyboard.Controls {
 			"7sut" + "8vxw" + "9y0z";
 
 		private const string QwertySequence =
-			"1qew" + "2ryt" + "3uoi" +
-			"4ads" + "5fhg" + "6jlk" +
-			"7zcx" + "8vnb" + "9m0p";
+			"8qew" + "1ryt" + "2uoi" +
+			"7ads" + "9fhg" + "3jlk" +
+			"6zcx" + "5vnb" + "4m0p";
 	}
 }

@@ -99,7 +99,7 @@ namespace ControllerKeyboard.Input {
 				else if(hasChanged)
 					GamepadOnStateChanged(null, null);
 
-				System.Threading.Thread.Sleep(16);
+				System.Threading.Thread.Sleep(30);
 			}
 		}
 
@@ -146,16 +146,18 @@ namespace ControllerKeyboard.Input {
 				return false;
 
 			const float mult = 10f;
-			_blockPos = new Vector2(
+			var newPos = new Vector2(
 				-lstick.X * mult,
-				lstick.Y * mult
+				 lstick.Y * mult
 			);
 
-			if (_blockPos.X > 1) _blockPos.X = 1;
-			else if (_blockPos.X < -1) _blockPos.X = -1;
+			if (newPos.X > 1) newPos.X = 1;
+			else if (newPos.X < -1) newPos.X = -1;
 
-			if (_blockPos.Y > 1) _blockPos.Y = 1;
-			else if (_blockPos.Y < -1) _blockPos.Y = -1;
+			if (newPos.Y > 1) newPos.Y = 1;
+			else if (newPos.Y < -1) newPos.Y = -1;
+
+			_blockPos = newPos;
 
 			return true;
 		}

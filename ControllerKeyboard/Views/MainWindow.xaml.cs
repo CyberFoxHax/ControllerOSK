@@ -67,8 +67,10 @@ namespace ControllerKeyboard.Views {
 			if (input.Space)
 				InsertText(" ");
 
-			if(input.Return)
+			if(input.Return){
+				InsertText(" ", false);
 				SendKey("{ENTER}");
+			}
 
 			if (input.MoveLeft){
 				CaretIndex--;
