@@ -1,0 +1,15 @@
+﻿<Grid x:Class="ControllerOSK.Controls.ImageLabel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:ControllerOSK.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="78" d:DesignWidth="364">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Image Source="{Binding ImageSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ImageLabel}}}" />
+    <TextBlock Text="{Binding Text, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ImageLabel}}}" VerticalAlignment="Center" Foreground="White" FontSize="20" Grid.Column="1" />
+</Grid>
