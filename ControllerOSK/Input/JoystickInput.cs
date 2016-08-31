@@ -94,18 +94,22 @@ namespace ControllerOSK.Input {
 
 				if (_isActive == false){
 					if (hasChanged && LastActiveState.Buttons.Back == ButtonState.Pressed)
-						GamepadOnStateChanged(null, null);
+						GamepadOnStateChanged();
 				}
 				else if(hasChanged)
-					GamepadOnStateChanged(null, null);
+					GamepadOnStateChanged();
 
 				System.Threading.Thread.Sleep(30);
 			}
 		}
 
-		private void GamepadOnStateChanged(object sender, System.EventArgs eventArgs){
+		private InputState _lastState;
+
+		private void GamepadOnStateChanged(){
 			var hasChanged = false;
+
 			ResetButtons();
+			var startState = new InputState(this);
 
 			_charPos = new Vector2();
 			if (new[]{
@@ -121,22 +125,37 @@ namespace ControllerOSK.Input {
 				if (LastActiveState.Buttons.B == ButtonState.Pressed) _charPos.X = -1;
 			}
 			
-			if (LastActiveState.Buttons.LeftShoulder  == ButtonState.Pressed) { Delete	= true; hasChanged = true; }
-			if (LastActiveState.Buttons.RightShoulder == ButtonState.Pressed) { Space	= true; hasChanged = true; }
-			if (LastActiveState.DPad.Left		== ButtonState.Pressed) { MoveLeft	= true; hasChanged = true; } // todo analogue move
-			if (LastActiveState.DPad.Right		== ButtonState.Pressed) { MoveRight = true; hasChanged = true; } // todo analogue move
-			if (LastActiveState.Buttons.Back	== ButtonState.Pressed) { OpenClose = true; hasChanged = true; }
-			if (LastActiveState.DPad.Down		== ButtonState.Pressed) { Return	= true; hasChanged = true; }
+			if (LastActiveState.Buttons.LeftShoulder	== ButtonState.Pressed) { Delete	= true; hasChanged = true; }
+			if (LastActiveState.Buttons.RightShoulder	== ButtonState.Pressed) { Space		= true; hasChanged = true; }
+			if (LastActiveState.DPad.Left				== ButtonState.Pressed) { MoveLeft	= true; hasChanged = true; } // todo analogue move
+			if (LastActiveState.DPad.Right				== ButtonState.Pressed) { MoveRight	= true; hasChanged = true; } // todo analogue move
+			if (LastActiveState.Buttons.Back			== ButtonState.Pressed) { OpenClose	= true; hasChanged = true; }
+			if (LastActiveState.DPad.Down				== ButtonState.Pressed) { Return	= true; hasChanged = true; }
 			
 			const float triggerThreshhold = 0.01f;
 			if (LastActiveState.Triggers.Left  > triggerThreshhold) { ChangeCase	= true; hasChanged = true; }
-			if (LastActiveState.Triggers.Right > triggerThreshhold) { ChangeSymbols = true; hasChanged = true; }
+			else { ChangeCase = false; hasChanged = true; }
+			if (LastActiveState.Triggers.Right > triggerThreshhold) { ChangeSymbols	= true; hasChanged = true; }
+			else { ChangeSymbols = false; hasChanged = true; }
 			
 			if (HandleBlocks())
 				hasChanged = true;
 			
-			if (hasChanged && KeyChange != null)
-				KeyChange(this);
+			var endState = new InputState(this);
+			if (_lastState.Delete		== Delete		) Delete		= false; else if(LastActiveState.Buttons.LeftShoulder	== ButtonState.Released) _lastState.Delete		= false;
+			if (_lastState.Space		== Space		) Space			= false; else if(LastActiveState.Buttons.RightShoulder	== ButtonState.Released) _lastState.Space		= false;
+			if (_lastState.MoveLeft		== MoveLeft		) MoveLeft		= false; else if(LastActiveState.DPad.Left				== ButtonState.Released) _lastState.MoveLeft	= false;
+			if (_lastState.MoveRight	== MoveRight	) MoveRight		= false; else if(LastActiveState.DPad.Right				== ButtonState.Released) _lastState.MoveRight	= false;
+		//	if (_lastState.OpenClose	== OpenClose	) OpenClose		= false; else if(LastActiveState.Buttons.Back			== ButtonState.Released) _lastState.OpenClose	= false;
+			if (_lastState.Return		== Return		) Return		= false; else if(LastActiveState.DPad.Down				== ButtonState.Released) _lastState.Return		= false;
+			if (_lastState.CharPos.Y	== CharPos.Y	) _charPos.Y	= 0;
+			if (_lastState.CharPos.X	== CharPos.X	) _charPos.X	= 0;
+			//	if (_lastState.ChangeCase   == ChangeCase	) ChangeCase	= false;
+			//	if (_lastState.ChangeSymbols== ChangeSymbols) ChangeSymbols	= false;
+
+			if (hasChanged == false || startState == endState || KeyChange == null) return;
+			_lastState = endState;
+			KeyChange(this);
 		}
 
 		private bool HandleBlocks(){
@@ -163,8 +182,8 @@ namespace ControllerOSK.Input {
 		}
 
 		public void ResetButtons() {
-			ChangeCase = false;
-			ChangeSymbols = false;
+			//ChangeCase = false;
+			//ChangeSymbols = false;
 			MoveLeft = false;
 			MoveRight = false;
 			Delete = false;

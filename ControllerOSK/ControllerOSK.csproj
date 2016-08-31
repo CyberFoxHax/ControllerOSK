@@ -154,6 +154,7 @@
     <Compile Include="Input\Global\KeyboardState.cs" />
     <Compile Include="Input\Global\LowLevelKeyboardInputEvent.cs" />
     <Compile Include="Input\IInput.cs" />
+    <Compile Include="Input\InputState.cs" />
     <Compile Include="Input\JoystickInput.cs" />
     <Compile Include="Input\KeyboardInput.cs" />
     <Compile Include="Input\Global\GlobalKeyboardHook.cs" />
