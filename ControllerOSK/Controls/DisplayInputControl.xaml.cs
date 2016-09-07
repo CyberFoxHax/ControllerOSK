@@ -91,10 +91,10 @@ namespace ControllerOSK.Controls {
 		static DisplayInputControl(){
 			BaseChars = QwertySequence;
 			BaseCharsUpper = BaseChars.ToUpper();
-			SymbolChars = 
-				"!?\"@"+ "%€|&" + "=[]§" +
-				"^<>~" + "+-*/" + "°{}¥" +
-				".:;," + "_#'-" + "$()£" ;
+			SymbolChars =
+				"%€|&"  + "+-*/" + "=[]§" +
+				"^<>~"  + "'!?." + "°{}¥" +
+				"\":;@" + "_#,-" + "$()£" ;
 		}
 
 		private const string AbcSequence =
