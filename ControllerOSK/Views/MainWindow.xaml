@@ -4,7 +4,8 @@
     xmlns:controls="clr-namespace:ControllerOSK.Controls"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="window" mc:Ignorable="d"
     x:Class="ControllerOSK.Views.MainWindow"
     Title="MainWindow"
     Width="751"
@@ -19,8 +20,8 @@
     MouseDown="MainWindow_OnMouseDown">
     <Window.Resources>
         <ContextMenu x:Key="TrayMenu">
-            <MenuItem Header="XInput" IsCheckable="True" IsChecked="True" Click="XInput_OnClick" />
-            <MenuItem Header="Keyboard hook" IsCheckable="True" Click="KeyboardHook_OnClick" />
+            <controls:RadioMenuItem GroupName="InputType" Header="XInput" IsCheckable="True" Click="XInput_OnClick" IsChecked="True" />
+            <controls:RadioMenuItem GroupName="InputType" Header="Keyboard hook" IsCheckable="True" Click="KeyboardHook_OnClick" />
             <Separator />
             <MenuItem Header="Show/Hide" Click="MenuItem_OnClick" />
             <MenuItem Header="Exit" Click="MenuItemExit_OnClick" />

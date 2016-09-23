@@ -20,11 +20,26 @@ namespace ControllerOSK.Controls {
 
 			SetBlock(children[4]);
 
+			SetControlSystem(Input.InputType.XInput);
+		}
+
+		public void SetControlSystem(Input.InputType inputType){
 			if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
-			InputSystem = new Input.JoystickInput();
+
+			if (InputSystem != null){
+				InputSystem.KeyChange -= InputSystemOnKeyChange;
+				InputSystem.Dispose();
+			}
+
+			switch (inputType){
+				case Input.InputType.XInput  : InputSystem = new Input.JoystickInput();		  break;
+				case Input.InputType.Keyboard: InputSystem = new Input.GlobalKeyboardInput(); break;
+				default:
+					throw new ArgumentOutOfRangeException("inputType", inputType, null);
+			}
+
 			InputSystem.KeyChange -= InputSystemOnKeyChange;
 			InputSystem.KeyChange += InputSystemOnKeyChange;
-
 		}
 
 		private readonly InputBlock[,] _elmGrid;
@@ -40,25 +55,26 @@ namespace ControllerOSK.Controls {
 		}
 
 
-		private System.Windows.Controls.UIElementCollection Children {
+		private System.Windows.Controls.UIElementCollection Children
+		{
 			get { return Wrapper.Children; }
 		}
 
-		public void SwitchUppercase() {
+		public void SwitchUppercase(){
 			var children = Children.OfType<InputBlock>().ToArray();
 			var seq = BaseCharsUpper;
 			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
 				children[c].SetChars(seq.Substring(i, 4));
 		}
 
-		public void SwitchLowercase() {
+		public void SwitchLowercase(){
 			var children = Children.OfType<InputBlock>().ToArray();
 			var seq = BaseChars;
 			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
 				children[c].SetChars(seq.Substring(i, 4));
 		}
 
-		public void SwitchSymbols() {
+		public void SwitchSymbols(){
 			var children = Children.OfType<InputBlock>().ToArray();
 			var seq = SymbolChars;
 			for (int i = 0, c = 0; i < seq.Length; i += 4, c++)
@@ -67,16 +83,10 @@ namespace ControllerOSK.Controls {
 
 		private void InputSystemOnKeyChange(Input.IInput obj){
 			Dispatcher.Invoke(() =>{
-				SetBlock(_elmGrid[
-					(int)(-obj.BlockPos.X + 1),
-					(int)(-obj.BlockPos.Y + 1)
-				]);
+				SetBlock(_elmGrid[(int) (-obj.BlockPos.X + 1), (int) (-obj.BlockPos.Y + 1)]);
 
-				if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f) {
-					var c = _activeElement.GetStr(
-						(int)obj.CharPos.X,
-						(int)-obj.CharPos.Y
-					);
+				if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f){
+					var c = _activeElement.GetStr((int) obj.CharPos.X, (int) -obj.CharPos.Y);
 					if (OnKey != null) OnKey(c);
 				}
 			});
@@ -91,20 +101,9 @@ namespace ControllerOSK.Controls {
 		static DisplayInputControl(){
 			BaseChars = QwertySequence;
 			BaseCharsUpper = BaseChars.ToUpper();
-			SymbolChars =
-				"%€|&"  + "+-*/" + "=[]§" +
-				"^<>~"  + "'!?." + "°{}¥" +
-				"\":;@" + "_#,-" + "$()£" ;
+			SymbolChars = "%€|&" + "+-*/" + "=[]§" + "^<>~" + "'!?." + "°{}¥" + "\":;@" + "_#,-" + "$()£";
 		}
 
-		private const string AbcSequence =
-			"1acb" + "2dfe" + "3gih" +
-			"4jlk" + "5mon" + "6prq" +
-			"7sut" + "8vxw" + "9y0z";
-
-		private const string QwertySequence =
-			"8qew" + "1ryt" + "2uoi" +
-			"7ads" + "9fhg" + "3jlk" +
-			"6zcx" + "5vnb" + "4m0p";
+		private const string QwertySequence = "8qew" + "1ryt" + "2uoi" + "7ads" + "9fhg" + "3jlk" + "6zcx" + "5vnb" + "4m0p";
 	}
 }

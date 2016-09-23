@@ -6,21 +6,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100" >
     <Grid>
-    <Grid x:Name="Grid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Viewbox Grid.Column="1" Grid.Row="0"><TextBlock x:Name="Txt1" Text="A" /></Viewbox>
-        <Viewbox Grid.Column="0" Grid.Row="1"><TextBlock x:Name="Txt2" Text="B" /></Viewbox>
-        <Viewbox Grid.Column="2" Grid.Row="1"><TextBlock x:Name="Txt3" Text="C" /></Viewbox>
-        <Viewbox Grid.Column="1" Grid.Row="2"><TextBlock x:Name="Txt4" Text="D" /></Viewbox>
-    </Grid>
+        <Grid x:Name="Grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Column="1" Grid.Row="0">
+                <TextBlock x:Name="Txt1" Text="A" />
+            </Viewbox>
+            <Viewbox Grid.Column="0" Grid.Row="1">
+                <TextBlock x:Name="Txt2" Text="B" />
+            </Viewbox>
+            <Viewbox Grid.Column="2" Grid.Row="1">
+                <TextBlock x:Name="Txt3" Text="C" />
+            </Viewbox>
+            <Viewbox Grid.Column="1" Grid.Row="2">
+                <TextBlock x:Name="Txt4" Text="D" />
+            </Viewbox>
+        </Grid>
     </Grid>
 </Border>

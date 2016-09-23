@@ -1,6 +1,6 @@
 ﻿
 namespace ControllerOSK.Input.Global {
-	public enum Key {
+	public enum Key : byte {
 		Back	= 0x08,
 		Space	= 0x20,
 		E		= 0x45,

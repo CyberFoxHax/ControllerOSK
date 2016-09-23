@@ -7,14 +7,16 @@ namespace ControllerOSK.Views {
 			InitializeComponent();
 			Background = System.Windows.Media.Brushes.Transparent;
 			InputControl.OnKey += InputControlOnOnKey;
-			InputControl.InputSystem.KeyChange += input =>{
-				Dispatcher.Invoke(() =>{
-					InputSystemOnKeyChange(input);
-				});
-			};
+			InputControl.InputSystem.KeyChange += OpenCloseHandle;
 			TextBox.Text = "";
 			System.Windows.Controls.Canvas.SetLeft(Caret, 0);
 			Loaded += OnLoaded;
+		}
+
+		private void OpenCloseHandle(Input.IInput obj){
+			Dispatcher.Invoke(() => {
+				InputSystemOnKeyChange(obj);
+			});
 		}
 
 		private void OnLoaded(object sender, System.Windows.RoutedEventArgs routedEventArgs){
@@ -145,10 +147,23 @@ namespace ControllerOSK.Views {
 				DragMove();
 		}
 
+		public Input.InputType InputType { get; set; }
+
 		private void KeyboardHook_OnClick(object sender, System.Windows.RoutedEventArgs e){
+			if (InputType == Input.InputType.Keyboard) return;
+			InputType = Input.InputType.Keyboard;
+			InputControl.InputSystem.KeyChange -= OpenCloseHandle;
+			InputControl.SetControlSystem(InputType);
+			InputControl.InputSystem.KeyChange += OpenCloseHandle;
 		}
 
 		private void XInput_OnClick(object sender, System.Windows.RoutedEventArgs e){
+			if (InputType == Input.InputType.XInput) return;
+			InputType = Input.InputType.XInput;
+			InputControl.InputSystem.KeyChange -= OpenCloseHandle;
+			InputControl.SetControlSystem(InputType);
+			InputControl.InputSystem.KeyChange += OpenCloseHandle;
+
 		}
 	}
 }
