@@ -243,13 +243,20 @@
   <ItemGroup>
     <Resource Include="Resources\active.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <Content Include="XInputDotNetPure.dll" />
-    <Content Include="XInputInterface.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="XInputInterfaceX64.dll" />
+    <Content Include="XInputInterfaceX86.dll" />
   </ItemGroup>
+  
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
+  <Target Name="BeforeBuild">
+    <Copy Condition="$(Platform) == 'x86'" SourceFiles="XInputInterfaceX86.dll" DestinationFiles="$(OutputPath)\XInputInterface.dll" />
+    <Copy Condition="$(Platform) == 'x64'" SourceFiles="XInputInterfaceX64.dll" DestinationFiles="$(OutputPath)\XInputInterface.dll" />
+  </Target>
+  
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
