@@ -4,31 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100" >
+             d:DesignHeight="100" d:DesignWidth="100" Background="White">
     <Grid>
-        <Grid x:Name="Grid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Viewbox Grid.Column="1" Grid.Row="0">
-                <TextBlock x:Name="Txt1" Text="A" />
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="1">
-                <TextBlock x:Name="Txt2" Text="B" />
-            </Viewbox>
-            <Viewbox Grid.Column="2" Grid.Row="1">
-                <TextBlock x:Name="Txt3" Text="C" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="2">
-                <TextBlock x:Name="Txt4" Text="D" />
-            </Viewbox>
-        </Grid>
+        <Canvas x:Name="Grid">
+            <Label x:Name="Txt1" Content="A" Canvas.Left="42" Canvas.Top="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="150" Height="150" />
+            <Label x:Name="Txt2" Content="B" Canvas.Top="42" Canvas.Left="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="150" Height="150" />
+            <Label x:Name="Txt3" Content="C" Canvas.Left="83" Canvas.Top="42" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="150" Height="150" />
+            <Label x:Name="Txt4" Content="D" Canvas.Left="42" Canvas.Top="74" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="150" Height="150" />
+        </Canvas>
     </Grid>
 </Border>

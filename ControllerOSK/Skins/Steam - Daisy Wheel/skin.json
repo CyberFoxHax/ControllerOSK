@@ -1,0 +1,22 @@
+{
+	"BackgroundImage": "BackgroudFlower.png",
+	"CursorImage": "active.png",
+	"RootSize": 512,
+	"CircleDistanceFromCenter": 170,
+	"CircleSize": 80,
+	"ActiveCircleSize": 120,
+	"CirclePadding": 10,
+	"ActiveCirclePadding": 26,
+	"NormalTextStyle": {
+		"FontFace": "Segoe UI",
+		"FontSize": 25,
+		"Color": "#ddd",
+		"Bold": false
+	},
+	"ActiveTextStyle": {
+		"FontFace": "Segoe UI",
+		"FontSize": 25,
+		"Color": "White",
+		"Bold": true
+	}
+}

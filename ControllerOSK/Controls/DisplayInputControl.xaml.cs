@@ -82,7 +82,7 @@ namespace ControllerOSK.Controls {
 		}
 
 		private void InputSystemOnKeyChange(Input.IInput obj){
-			Dispatcher.Invoke(() =>{
+			Dispatcher.Invoke(() => {
 				SetBlock(_elmGrid[(int) (-obj.BlockPos.X + 1), (int) (-obj.BlockPos.Y + 1)]);
 
 				if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f){

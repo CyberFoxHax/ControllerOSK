@@ -5,6 +5,7 @@
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:ControllerOSK.Views"
     x:Name="window" mc:Ignorable="d"
     x:Class="ControllerOSK.Views.MainWindow"
     Title="MainWindow"
@@ -17,34 +18,20 @@
     ShowActivated="False"
     Topmost="True"
     ShowInTaskbar="False"
-    MouseDown="MainWindow_OnMouseDown">
-    <Window.Resources>
-        <ContextMenu x:Key="TrayMenu">
-            <controls:RadioMenuItem GroupName="InputType" Header="XInput" IsCheckable="True" Click="XInput_OnClick" IsChecked="True" />
-            <controls:RadioMenuItem GroupName="InputType" Header="Keyboard hook" IsCheckable="True" Click="KeyboardHook_OnClick" />
-            <Separator />
-            <MenuItem Header="Show/Hide" Click="MenuItem_OnClick" />
-            <MenuItem Header="Exit" Click="MenuItemExit_OnClick" />
-        </ContextMenu>
-    </Window.Resources>
+    MouseDown="MainWindow_OnMouseDown"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True">
     <Window.Effect>
         <DropShadowEffect BlurRadius="20" RenderingBias="Performance" />
     </Window.Effect>
     <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="515" />
-                <RowDefinition />
+                <RowDefinition Height="512" x:Name="ImageAreaRow" />
+                <RowDefinition Height="186" x:Name="InfoAreaHeight" />
             </Grid.RowDefinitions>
-            <tb:TaskbarIcon x:Name="NotifyIcon"
-                            Visibility="Visible"
-                            ToolTipText="ControllerOSK"
-                            ContextMenu="{StaticResource TrayMenu}"
-                            IconSource="/ControllerOSK;component/Resources/icon.ico"
-                            MenuActivation="LeftOrRightClick"
-                            PopupActivation="DoubleClick"
-                            ToolTip="ControllerOSK" />
-            <controls:DisplayInputControl Grid.Row="0" x:Name="InputControl" Width="512" Height="512" />
+            <views:SystemTray x:Name="SystemTray" />
+            <controls:DisplayInputControl Grid.Row="0" x:Name="InputControl" Width="512" Height="512" HorizontalAlignment="Center" />
             <Border Grid.Row="1" Background="#444" CornerRadius="10">
                 <Grid>
                     <Grid.RowDefinitions>

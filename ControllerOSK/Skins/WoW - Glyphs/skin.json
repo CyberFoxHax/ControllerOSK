@@ -1,0 +1,18 @@
+{
+	"BackgroundImage": "bg.png",
+	"CursorImage": "active.png",
+	"RootSize": 600,
+	"CircleDistanceFromCenter": 170,
+	"ActiveCircleSize": 160,
+	"CirclePadding": 10,
+	"ActiveCirclePadding": 50,
+	"NormalTextStyle": {
+		"FontFace": "Arial",
+		"FontSize": 24,
+	},
+	"ActiveTextStyle": {
+		"FontFace": "Arial",
+		"FontSize": 25,
+		"Bold": true
+	}
+}

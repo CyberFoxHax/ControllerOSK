@@ -4,55 +4,10 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:controls="clr-namespace:ControllerOSK.Controls"
-            mc:Ignorable="d" Height="512" Width="512">
-    <Canvas x:Name="Wrapper">
-        <Canvas.Resources>
-            <Style TargetType="controls:InputBlock">
-                <Style.Resources>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsActive,
-                                     RelativeSource={RelativeSource
-                                     AncestorType={x:Type controls:InputBlock}}}" Value="True">
-                                <Setter Property="FontWeight" Value="Black" />
-                                <Setter Property="Foreground" Value="White"  />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="FontSize"             Value="1000" />
-                        <Setter Property="HorizontalAlignment"  Value="Center" />
-                        <Setter Property="VerticalAlignment"    Value="Center" />
-                        <Setter Property="Foreground"           Value="#ddd"  />
-                    </Style>
-                    <Style TargetType="Grid">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsActive,
-                                     RelativeSource={RelativeSource
-                                     AncestorType={x:Type controls:InputBlock}}}" Value="True">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <ImageBrush ImageSource="/ControllerOSK;component/Resources/active.png"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Margin" Value="7"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Style.Resources>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="True">
-                        <Setter Property="Background" Value="#545454" />
-                        <Setter Property="Width"  Value="120" />
-                        <Setter Property="Height" Value="120" />
-                        <Setter Property="Margin" Value="-20"></Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="CornerRadius" Value="80" />
-                <Setter Property="Width"  Value="80" />
-                <Setter Property="Height" Value="80" />
-            </Style>
-        </Canvas.Resources>
+            mc:Ignorable="d" Height="512" Width="512" SnapsToDevicePixels="True">
+    <Canvas x:Name="Wrapper" SnapsToDevicePixels="True">
         <Canvas.Background>
-            <ImageBrush ImageSource="/ControllerOSK;component/Resources/BackgroudFlower.png"/>
+            <ImageBrush ImageSource="/ControllerOSK;component/Resources/BackgroudFlower.png" />
         </Canvas.Background>
         <controls:InputBlock Canvas.Left="107" Canvas.Top="98" />
         <controls:InputBlock Canvas.Left="219" Canvas.Top="44" />

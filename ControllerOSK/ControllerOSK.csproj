@@ -95,8 +95,12 @@
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net45\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,7 +123,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DisplayInputControl.LoadSkin.cs" />
     <Compile Include="Controls\RadioMenuItem.cs" />
+    <Compile Include="Views\SystemTray.xaml.cs">
+      <DependentUpon>SystemTray.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\DisplayInputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,12 +167,17 @@
     <Compile Include="Input\InputType.cs" />
     <Compile Include="Input\JoystickInput.cs" />
     <Compile Include="Input\Global\GlobalKeyboardHook.cs" />
+    <Compile Include="JsonModels\StyleModel.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\SystemTray.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -191,6 +204,13 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Resources\icon.psd" />
+    <Content Include="Skins\currentSkin.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skins\Steam - Daisy Wheel\skin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Views\MainWindow.SendKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -245,10 +265,26 @@
     <Resource Include="Resources\active.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Skins\Steam - Daisy Wheel\active.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skins\Steam - Daisy Wheel\BackgroudFlower.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skins\WoW - Glyphs\active.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skins\WoW - Glyphs\bg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skins\WoW - Glyphs\skin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="XInputDotNetPure.dll" />
     <Content Include="XInputInterfaceX64.dll" />
     <Content Include="XInputInterfaceX86.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
     <Copy Condition="$(Platform) == 'x86'" SourceFiles="XInputInterfaceX86.dll" DestinationFiles="$(OutputPath)\XInputInterface.dll" />
