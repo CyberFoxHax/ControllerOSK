@@ -5,7 +5,7 @@
 	"CircleDistanceFromCenter": 170,
 	"ActiveCircleSize": 160,
 	"CirclePadding": 10,
-	"ActiveCirclePadding": 50,
+	"ActiveCirclePadding": 55,
 	"NormalTextStyle": {
 		"FontFace": "Arial",
 		"FontSize": 24,
