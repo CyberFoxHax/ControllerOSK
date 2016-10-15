@@ -130,7 +130,7 @@ namespace ControllerOSK.Input {
 			if (LastActiveState.DPad.Left				== ButtonState.Pressed) { MoveLeft	= true; hasChanged = true; } // todo analogue move
 			if (LastActiveState.DPad.Right				== ButtonState.Pressed) { MoveRight	= true; hasChanged = true; } // todo analogue move
 			if (LastActiveState.Buttons.Back			== ButtonState.Pressed) { OpenClose	= true; hasChanged = true; }
-			if (LastActiveState.DPad.Down				== ButtonState.Pressed) { Return	= true; hasChanged = true; }
+			if (LastActiveState.DPad.Down				== ButtonState.Pressed) { Enter	= true; hasChanged = true; }
 			
 			const float triggerThreshhold = 0.01f;
 			if (LastActiveState.Triggers.Left  > triggerThreshhold) { ChangeCase	= true; hasChanged = true; }
@@ -147,7 +147,7 @@ namespace ControllerOSK.Input {
 			if (_lastState.MoveLeft		== MoveLeft		) MoveLeft		= false; else if(LastActiveState.DPad.Left				== ButtonState.Released) _lastState.MoveLeft	= false;
 			if (_lastState.MoveRight	== MoveRight	) MoveRight		= false; else if(LastActiveState.DPad.Right				== ButtonState.Released) _lastState.MoveRight	= false;
 		//	if (_lastState.OpenClose	== OpenClose	) OpenClose		= false; else if(LastActiveState.Buttons.Back			== ButtonState.Released) _lastState.OpenClose	= false;
-			if (_lastState.Return		== Return		) Return		= false; else if(LastActiveState.DPad.Down				== ButtonState.Released) _lastState.Return		= false;
+			if (_lastState.Return		== Enter		) Enter		= false; else if(LastActiveState.DPad.Down				== ButtonState.Released) _lastState.Return		= false;
 			if (_lastState.CharPos.Y	== CharPos.Y	) _charPos.Y	= 0;
 			if (_lastState.CharPos.X	== CharPos.X	) _charPos.X	= 0;
 			//	if (_lastState.ChangeCase   == ChangeCase	) ChangeCase	= false;
@@ -187,7 +187,7 @@ namespace ControllerOSK.Input {
 			MoveLeft = false;
 			MoveRight = false;
 			Delete = false;
-			Return = false;
+			Enter = false;
 			Space = false;
 			OpenClose = false;
 		}
@@ -213,7 +213,7 @@ namespace ControllerOSK.Input {
 		public bool MoveRight { get; set; }
 		public bool Delete { get; set; }
 		public bool Space { get; set; }
-		public bool Return { get; set; }
+		public bool Enter { get; set; }
 		public bool OpenClose { get; set; }
 	}
 }

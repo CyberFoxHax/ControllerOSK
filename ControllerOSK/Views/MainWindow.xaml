@@ -60,7 +60,10 @@
                     </Border>
                     <controls:ImageLabel Grid.Row="1" Margin="461,0,77,32"
                         ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_Dpad_Down.png"
-                        Text="Return" />
+                        Text="Enter" />
+                    <controls:ImageLabel Margin="595,0,-57,38"
+                        ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_Menu.png"
+                        Text="Enter" Grid.Row="1" />
                     <controls:ImageLabel Grid.Row="1" Margin="0,0,543,32"
                         ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_LT.png"
                         Text="Uppercase" />
@@ -69,11 +72,11 @@
                           Text="Symbols" />
                     <controls:ImageLabel Grid.Row="1" Margin="1,32,552,0"
                         ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_LB.png"
-                        Text="Backspace" />
+                        Text="Delete" />
                     <controls:ImageLabel Margin="161,32,392,0" Grid.Row="1"
                         ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_RB.png"
                         Text="Space"/>
-                    <controls:ImageLabel Margin="595,32,0,0" Grid.Row="1"
+                    <controls:ImageLabel Margin="595,37,0,0" Grid.Row="1"
                         ImageSource="/ControllerOSK;component/Resources/Xelu/Xbox One/XboxOne_Windows.png"
                         Text="Show/Hide"/>
                     <controls:ImageLabel Grid.Row="1" Margin="306,0,232,32"

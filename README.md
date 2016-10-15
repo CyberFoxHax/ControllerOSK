@@ -2,5 +2,5 @@
 
 A keyboard input solution for joystick users
 
-![Screenshot](screenshot.png)
-![Screenshot2](screenshot-wow.png)
+![Screenshot](screenshot.jpg)
+![Screenshot2](screenshot-wow.jpg)

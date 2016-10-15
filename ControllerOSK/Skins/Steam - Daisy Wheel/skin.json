@@ -10,7 +10,7 @@
 	"NormalTextStyle": {
 		"FontFace": "Segoe UI",
 		"FontSize": 25,
-		"Color": "#ddd",
+		"Color": "#eee",
 		"Bold": false
 	},
 	"ActiveTextStyle": {

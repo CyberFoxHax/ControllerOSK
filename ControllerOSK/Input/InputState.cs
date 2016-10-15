@@ -20,7 +20,7 @@ namespace ControllerOSK.Input{
 			MoveRight = input.MoveRight;
 			Delete = input.Delete;
 			Space = input.Space;
-			Return = input.Return;
+			Return = input.Enter;
 			OpenClose = input.OpenClose;
 		}
 

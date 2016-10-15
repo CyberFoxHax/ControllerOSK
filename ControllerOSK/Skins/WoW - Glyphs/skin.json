@@ -3,7 +3,7 @@
 	"CursorImage": "active.png",
 	"RootSize": 600,
 	"CircleDistanceFromCenter": 170,
-	"ActiveCircleSize": 160,
+	"ActiveCircleSize": 170,
 	"CirclePadding": 10,
 	"ActiveCirclePadding": 55,
 	"NormalTextStyle": {

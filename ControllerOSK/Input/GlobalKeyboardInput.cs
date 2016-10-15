@@ -62,7 +62,7 @@ namespace ControllerOSK.Input {
 			if (key == Key.Z)		{MoveLeft		= true;	hasChangd = true;}
 			if (key == Key.X)		{MoveRight		= true;	hasChangd = true;}
 			if (key == Key.F12)		{OpenClose		= true;	hasChangd = true;}
-			if (key == Key.Enter)	{Return			= true;	hasChangd = true;}
+			if (key == Key.Enter)	{Enter			= true;	hasChangd = true;}
 
 			_charPos = new Vector2();
 			if (new[]{
@@ -151,7 +151,7 @@ namespace ControllerOSK.Input {
 		public bool MoveRight { get; set; }
 		public bool Delete { get; set; }
 		public bool Space { get; set; }
-		public bool Return { get; set; }
+		public bool Enter { get; set; }
 		public bool OpenClose { get; set; }
 		public bool Show { get; set; }
 	}

@@ -101,7 +101,7 @@ namespace ControllerOSK.Controls {
 		static DisplayInputControl(){
 			BaseChars = QwertySequence;
 			BaseCharsUpper = BaseChars.ToUpper();
-			SymbolChars = "%€|&" + "+-*/" + "=[]§" + "^<>~" + "'!?." + "°{}¥" + "\":;@" + "_#,-" + "$()£";
+			SymbolChars = "%€|&" + "+-*/" + "=[]\\" + "^<>~" + "'!?." + "°{}¥" + "\":;@" + "_#,-" + "$()£";
 		}
 
 		private const string QwertySequence = "1qew" + "2ryt" + "3uoi" + "4ads" + "5fhg" + "6jlk" + "7zcx" + "8vnb" + "9m0p";

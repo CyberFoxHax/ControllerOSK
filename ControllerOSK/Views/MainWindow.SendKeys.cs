@@ -53,7 +53,7 @@ namespace ControllerOSK.Views {
 			if (input.Space)
 				InsertText(" ");
 
-			if (input.Return) {
+			if (input.Enter) {
 				InsertText(" ", false);
 				SendKey("{ENTER}");
 			}

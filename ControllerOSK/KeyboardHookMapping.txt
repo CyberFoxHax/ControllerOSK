@@ -1,0 +1,18 @@
+if (Key.Back)	Delete		= true;
+if (Key.Space)	Space		= true;
+if (Key.E)	ChangeSymbols	= true;
+if (Key.Q)	ChangeCase	= true;
+if (Key.Z)	MoveLeft	= true;
+if (Key.X)	MoveRight	= true;
+if (Key.F12)	OpenClose	= true;
+if (Key.Enter)	Enter		= true;
+
+if (Key.Up)	_charPos.Y = 1;
+if (Key.Left)	_charPos.X = 1;
+if (Key.Down)	_charPos.Y = -1;
+if (Key.Right)	_charPos.X = -1;
+
+if (Key.W)	_blockPos.Y = 1;
+if (Key.A)	_blockPos.X = 1;
+if (Key.S)	_blockPos.Y = -1;
+if (Key.D)	_blockPos.X = -1;
