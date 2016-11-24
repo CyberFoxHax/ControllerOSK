@@ -53,8 +53,9 @@ namespace ControllerOSK.Views {
 			if (input.Space)
 				InsertText(" ");
 
-			if (input.Enter) {
-				InsertText(" ", false);
+			if (input.Enter){
+				TextBox.Text = TextBox.Text.Substring(_caretIndex);
+				CaretIndex = 0;
 				SendKey("{ENTER}");
 			}
 
