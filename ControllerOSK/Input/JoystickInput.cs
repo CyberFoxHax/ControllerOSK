@@ -67,7 +67,7 @@ namespace ControllerOSK.Input {
 				System.Math.Abs(a.Triggers.Left			- b.Triggers.Left		) < tolerance &&
 				System.Math.Abs(a.Triggers.Right		- b.Triggers.Right		) < tolerance
 			;
-		}f
+		}
 
 		private void Poll(){
 			var oldGamePadStates = new GamePadState[4];
@@ -168,7 +168,7 @@ namespace ControllerOSK.Input {
 			if (System.Math.Abs(lstick.X) < tolerance && System.Math.Abs(lstick.Y) < tolerance)
 				return false;
 
-			const float mult = 5f;
+			const float mult = 2f;
 			var newPos = new Vector2(
 				-lstick.X * mult,
 				 lstick.Y * mult
