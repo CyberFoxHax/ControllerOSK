@@ -113,10 +113,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="XInputDotNetPure, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\XInputDotNetPure.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -280,16 +276,14 @@
     <Content Include="Skins\WoW - Glyphs\skin.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="XInputDotNetPure.dll" />
-    <Content Include="XInputInterfaceX64.dll" />
-    <Content Include="XInputInterfaceX86.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\XInputDotNetPure\XInputDotNetPure.csproj">
+      <Project>{952700cd-a384-43a4-ac4b-52256f83836e}</Project>
+      <Name>XInputDotNetPure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
-    <Copy Condition="$(Platform) == 'x86'" SourceFiles="XInputInterfaceX86.dll" DestinationFiles="$(OutputPath)\XInputInterface.dll" />
-    <Copy Condition="$(Platform) == 'x64'" SourceFiles="XInputInterfaceX64.dll" DestinationFiles="$(OutputPath)\XInputInterface.dll" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
