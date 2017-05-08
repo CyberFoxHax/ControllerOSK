@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerOSK", "ControllerOSK\ControllerOSK.csproj", "{A2ED032B-6B27-4838-A9CE-A75249CAEFD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XInputDotNetPure", "XInputDotNetPure\XInputDotNetPure.csproj", "{952700CD-A384-43A4-AC4B-52256F83836E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1967D61A-FB64-463C-BB3C-BB6E90FBC76F} = {1967D61A-FB64-463C-BB3C-BB6E90FBC76F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XInputInterface", "XInputInterface\XInputInterface.vcxproj", "{1967D61A-FB64-463C-BB3C-BB6E90FBC76F}"
 EndProject
