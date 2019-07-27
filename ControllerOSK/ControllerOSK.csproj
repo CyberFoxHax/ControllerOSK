@@ -121,6 +121,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\DisplayInputControl.LoadSkin.cs" />
     <Compile Include="Controls\RadioMenuItem.cs" />
+    <Compile Include="Input\JoystickEventDispatcher.cs" />
     <Compile Include="Views\SystemTray.xaml.cs">
       <DependentUpon>SystemTray.xaml</DependentUpon>
     </Compile>

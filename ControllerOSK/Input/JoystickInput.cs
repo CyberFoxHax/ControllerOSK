@@ -1,217 +1,141 @@
-﻿
-using System.Linq;
+﻿using System;
 using XInputDotNetPure;
 
 namespace ControllerOSK.Input {
-	public class JoystickInput : IInput {
-		public JoystickInput(){
-			Enable();
+	public class JoystickInput : IInput, IDisposable {
 
-			_isRunning = true;
-			new System.Threading.Thread(Poll).Start();
-		}
+        public JoystickInput() {
+            RegisterEvents();
+            CharPos = new Vector2();
+        }
+
+        private JoystickEventDispatcher _gamepadEventOpen = new JoystickEventDispatcher();
+        private JoystickEventDispatcher _gamepadEventClosed = new JoystickEventDispatcher();
 
 		~JoystickInput(){
-			_isRunning = false;
+            Dispose();
 		}
 
-		private bool _isActive;
-
 		public void Enable(){
-			_isActive = true;
+            Console.WriteLine("Enable");
+            _gamepadEventOpen.Enabled = true;
+            _gamepadEventClosed.Enabled = false;
 		}
 
 		public void Disable(){
-			_isActive = false;
+            Console.WriteLine("Disable");
+            _gamepadEventOpen.Enabled = false;
+            _gamepadEventClosed.Enabled = true;
 		}
 
 		public void Dispose() {
-			_isActive = false;
-			_isRunning = false;
-		}
+            _gamepadEventOpen.Enabled = false;
+            _gamepadEventClosed.Enabled = false;
+            _gamepadEventOpen.Dispose();
+            _gamepadEventClosed.Dispose();
+        }
 
-		private static readonly PlayerIndex[] PlayerIndices = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
+        private void RemoveEvents() {
 
-		readonly GamePadState[] _gamePadStates = new GamePadState[4];
-		readonly uint[] _lastPacketNumbers = new uint[4];
-		public int LastActivePlayerIndex;
+        }
 
-		public GamePadDeadZone DeadZone { get; set; }
-		public int LastActiveIndex { get { return LastActivePlayerIndex; } }
-		public GamePadState LastActiveState { get { return _gamePadStates[LastActivePlayerIndex]; } }
-		public bool LinkTriggersToVibration { get; set; }
+        private void DispatchKeyChange(int player) {
+            KeyChange?.Invoke(this);
+            CharPos = new Vector2();
+        }
 
-		public static bool GamePadStateEquals(GamePadState a, GamePadState b){
-			const float tolerance = 0.01f;
-			return
-				a.Buttons.LeftShoulder	== b.Buttons.LeftShoulder	 && 
-				a.Buttons.A				== b.Buttons.A				 &&
-				a.Buttons.B				== b.Buttons.B				 &&
-				a.Buttons.Back			== b.Buttons.Back			 &&
-				a.Buttons.Guide			== b.Buttons.Guide			 &&
-				a.Buttons.LeftShoulder	== b.Buttons.LeftShoulder	 &&
-				a.Buttons.LeftStick		== b.Buttons.LeftStick		 &&
-				a.Buttons.RightShoulder	== b.Buttons.RightShoulder	 &&
-				a.Buttons.RightStick	== b.Buttons.RightStick		 &&
-				a.Buttons.Start			== b.Buttons.Start			 &&
-				a.Buttons.X				== b.Buttons.X				 &&
-				a.Buttons.Y				== b.Buttons.Y				 &&
-				a.DPad.Left				== b.DPad.Left				 &&
-				a.DPad.Right			== b.DPad.Right				 &&
-				a.DPad.Up				== b.DPad.Up				 &&
-				a.DPad.Down				== b.DPad.Down				 &&
-				System.Math.Abs(a.ThumbSticks.Left.X	- b.ThumbSticks.Left.X	) < tolerance &&
-				System.Math.Abs(a.ThumbSticks.Left.Y	- b.ThumbSticks.Left.Y	) < tolerance &&
-				System.Math.Abs(a.ThumbSticks.Right.X	- b.ThumbSticks.Right.X	) < tolerance &&
-				System.Math.Abs(a.ThumbSticks.Right.Y	- b.ThumbSticks.Right.Y	) < tolerance &&
-				System.Math.Abs(a.Triggers.Left			- b.Triggers.Left		) < tolerance &&
-				System.Math.Abs(a.Triggers.Right		- b.Triggers.Right		) < tolerance
-			;
-		}
+        private void RegisterEvents() {
+            _gamepadEventOpen.LeftAnalogStick_Changed += (p, v) => {
+                BlockPos = v;
+                KeyChange?.Invoke(this);
+            };
 
-		private void Poll(){
-			var oldGamePadStates = new GamePadState[4];
-			while (_isRunning){
-				var hasChanged = false;
+            _gamepadEventOpen.LeftTrigger_Changed += (p, v) => {
+                var buttonActive = v > 0.5;
+                if (ChangeCase == buttonActive)
+                    return;
 
-				for (var i = 0; i < 4; i++){
-					oldGamePadStates[i] = _gamePadStates[i];
-					_gamePadStates[i] = GamePad.GetState(PlayerIndices[i], GamePadDeadZone.Circular);
+                ChangeCase = buttonActive;
+                KeyChange?.Invoke(this);
+            };
 
-					if (GamePadStateEquals(oldGamePadStates[i], _gamePadStates[i]) == false)
-						hasChanged = true;
-				}
+            _gamepadEventOpen.RightTrigger_Changed += (p, v) => {
+                var buttonActive = v > 0.5;
+                if (ChangeSymbols == buttonActive)
+                    return;
 
-				var activePlayerIndex = LastActivePlayerIndex;
-				for (var i = 0; i < 4; i++){
-					if (_gamePadStates[i].PacketNumber == _lastPacketNumbers[i])
-						continue;
-					activePlayerIndex = i;
-					_lastPacketNumbers[i] = _gamePadStates[i].PacketNumber;
+                ChangeSymbols = buttonActive;
+                KeyChange?.Invoke(this);
+            };
 
-					LastActivePlayerIndex = activePlayerIndex;
-					if (GamePadStateEquals(oldGamePadStates[i], _gamePadStates[i]) == false){
+            _gamepadEventOpen.ButtonA_Down += p => CharPos = new Vector2( 0, -1);
+            _gamepadEventOpen.ButtonB_Down += p => CharPos = new Vector2(-1,  0);
+            _gamepadEventOpen.ButtonX_Down += p => CharPos = new Vector2( 1,  0);
+            _gamepadEventOpen.ButtonY_Down += p => CharPos = new Vector2( 0,  1);
+            _gamepadEventOpen.ButtonA_Down += DispatchKeyChange;
+            _gamepadEventOpen.ButtonB_Down += DispatchKeyChange;
+            _gamepadEventOpen.ButtonX_Down += DispatchKeyChange;
+            _gamepadEventOpen.ButtonY_Down += DispatchKeyChange;
 
-						if (_isActive == false) {
-							if (hasChanged && _gamePadStates[i].Buttons.Back == ButtonState.Pressed)
-								GamepadOnStateChanged();
-						}
-						else if (hasChanged)
-							GamepadOnStateChanged();
-					}
-				}
+            _gamepadEventOpen.ButtonDPadLeft_Down += p => {
+                MoveLeft = true;
+                KeyChange?.Invoke(this);
+                MoveLeft = false;
+            };
 
-				
+            _gamepadEventOpen.ButtonDPadRight_Down += p => {
+                MoveRight = true;
+                KeyChange?.Invoke(this);
+                MoveRight = false;
+            };
 
-				System.Threading.Thread.Sleep(30);
-			}
-		}
+            _gamepadEventOpen.ButtonLeftBumper_Down += p => {
+                Delete = true;
+                KeyChange?.Invoke(this);
+                Delete = false;
+            };
 
-		private InputState _lastState;
+            _gamepadEventOpen.ButtonRightBumper_Down += p => {
+                Space = true;
+                KeyChange?.Invoke(this);
+                Space = false;
+            };
 
-		private void GamepadOnStateChanged(){
-			var hasChanged = false;
+            _gamepadEventOpen.ButtonDPadDown_Down += p => {
+                Enter= true;
+                KeyChange?.Invoke(this);
+                Enter = false;
+            };
 
-			ResetButtons();
-			var startState = new InputState(this);
+            _gamepadEventOpen.ButtonBack_Down += p => {
+                Console.WriteLine("open:back button");
+                OpenClose = true;
+                KeyChange?.Invoke(this);
+                OpenClose = false;
+                Disable();
+            };
 
-			_charPos = new Vector2();
-			if (new[]{
-				LastActiveState.Buttons.A == ButtonState.Pressed,
-				LastActiveState.Buttons.B == ButtonState.Pressed,
-				LastActiveState.Buttons.X == ButtonState.Pressed,
-				LastActiveState.Buttons.Y == ButtonState.Pressed
-			}.Any(p => p)) {
-				hasChanged = true;
-				if (LastActiveState.Buttons.Y == ButtonState.Pressed) _charPos.Y = 1;
-				if (LastActiveState.Buttons.X == ButtonState.Pressed) _charPos.X = 1;
-				if (LastActiveState.Buttons.A == ButtonState.Pressed) _charPos.Y = -1;
-				if (LastActiveState.Buttons.B == ButtonState.Pressed) _charPos.X = -1;
-			}
-			
-			if (LastActiveState.Buttons.LeftShoulder	== ButtonState.Pressed) { Delete	= true; hasChanged = true; }
-			if (LastActiveState.Buttons.RightShoulder	== ButtonState.Pressed) { Space		= true; hasChanged = true; }
-			if (LastActiveState.DPad.Left				== ButtonState.Pressed) { MoveLeft	= true; hasChanged = true; } // todo analogue move
-			if (LastActiveState.DPad.Right				== ButtonState.Pressed) { MoveRight	= true; hasChanged = true; } // todo analogue move
-			if (LastActiveState.Buttons.Back			== ButtonState.Pressed) { OpenClose	= true; hasChanged = true; }
-			if (LastActiveState.DPad.Down				== ButtonState.Pressed) { Enter	= true; hasChanged = true; }
-			
-			const float triggerThreshhold = 0.01f;
-			if (LastActiveState.Triggers.Left  > triggerThreshhold) { ChangeCase	= true; hasChanged = true; }
-			else { ChangeCase = false; hasChanged = true; }
-			if (LastActiveState.Triggers.Right > triggerThreshhold) { ChangeSymbols	= true; hasChanged = true; }
-			else { ChangeSymbols = false; hasChanged = true; }
-			
-			if (HandleBlocks())
-				hasChanged = true;
-			
-			var endState = new InputState(this);
-			if (_lastState.Delete		== Delete		) Delete		= false; else if(LastActiveState.Buttons.LeftShoulder	== ButtonState.Released) _lastState.Delete		= false;
-			if (_lastState.Space		== Space		) Space			= false; else if(LastActiveState.Buttons.RightShoulder	== ButtonState.Released) _lastState.Space		= false;
-			if (_lastState.MoveLeft		== MoveLeft		) MoveLeft		= false; else if(LastActiveState.DPad.Left				== ButtonState.Released) _lastState.MoveLeft	= false;
-			if (_lastState.MoveRight	== MoveRight	) MoveRight		= false; else if(LastActiveState.DPad.Right				== ButtonState.Released) _lastState.MoveRight	= false;
-		//	if (_lastState.OpenClose	== OpenClose	) OpenClose		= false; else if(LastActiveState.Buttons.Back			== ButtonState.Released) _lastState.OpenClose	= false;
-			if (_lastState.Return		== Enter		) Enter		= false; else if(LastActiveState.DPad.Down				== ButtonState.Released) _lastState.Return		= false;
-			if (_lastState.CharPos.Y	== CharPos.Y	) _charPos.Y	= 0;
-			if (_lastState.CharPos.X	== CharPos.X	) _charPos.X	= 0;
-			//	if (_lastState.ChangeCase   == ChangeCase	) ChangeCase	= false;
-			//	if (_lastState.ChangeSymbols== ChangeSymbols) ChangeSymbols	= false;
+            _gamepadEventOpen.ButtonDPadUp_Down += p => {
+                Console.WriteLine("open:up button");
+                OpenClose = true;
+                KeyChange?.Invoke(this);
+                OpenClose = false;
+                Disable();
+            };
 
-			if (hasChanged == false || startState == endState || KeyChange == null) return;
-			_lastState = endState;
-			KeyChange(this);
-		}
+            _gamepadEventClosed.ButtonBack_Down += p => {
+                Console.WriteLine("closed:back button");
+                OpenClose = true;
+                KeyChange?.Invoke(this);
+                OpenClose = false;
+                Enable();
+            };
+        }
 
-		private bool HandleBlocks(){
-			var lstick = LastActiveState.ThumbSticks.Left;
-			const double tolerance = 0.0;
-			if (System.Math.Abs(lstick.X) < tolerance && System.Math.Abs(lstick.Y) < tolerance)
-				return false;
-
-			const float mult = 2f;
-			var newPos = new Vector2(
-				-lstick.X * mult,
-				 lstick.Y * mult
-			);
-
-			if (newPos.X > 1) newPos.X = 1;
-			else if (newPos.X < -1) newPos.X = -1;
-
-			if (newPos.Y > 1) newPos.Y = 1;
-			else if (newPos.Y < -1) newPos.Y = -1;
-
-			_blockPos = newPos;
-
-			return true;
-		}
-
-		public void ResetButtons() {
-			//ChangeCase = false;
-			//ChangeSymbols = false;
-			MoveLeft = false;
-			MoveRight = false;
-			Delete = false;
-			Enter = false;
-			Space = false;
-			OpenClose = false;
-		}
-
-		private Vector2 _blockPos;
-		private Vector2 _charPos;
-		private bool _isRunning;
 		public event System.Action<IInput> KeyChange;
-
-		public Vector2 BlockPos {
-			get { return _blockPos; }
-			set { _blockPos = value; }
-		}
-
-		public Vector2 CharPos {
-			get { return _charPos; }
-			set { _charPos = value; }
-		}
-
-		public bool ChangeCase { get; set; }
+		public Vector2 BlockPos { get; set; }
+        public Vector2 CharPos { get; set; }
+        public bool ChangeCase { get; set; }
 		public bool ChangeSymbols { get; set; }
 		public bool MoveLeft { get; set; }
 		public bool MoveRight { get; set; }

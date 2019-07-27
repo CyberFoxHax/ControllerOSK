@@ -83,12 +83,12 @@ namespace ControllerOSK.Controls {
 
 		private void InputSystemOnKeyChange(Input.IInput obj){
 			Dispatcher.Invoke(() => {
-				SetBlock(_elmGrid[(int) (-obj.BlockPos.X + 1), (int) (-obj.BlockPos.Y + 1)]);
+				SetBlock(_elmGrid[(int) (Math.Round(obj.BlockPos.X + 1)), (int) (Math.Round(-obj.BlockPos.Y + 1))]);
 
 				if (Math.Abs(obj.CharPos.X) > 0.1f || Math.Abs(obj.CharPos.Y) > 0.1f){
 					var c = _activeElement.GetStr((int) obj.CharPos.X, (int) -obj.CharPos.Y);
-					if (OnKey != null) OnKey(c);
-				}
+                    OnKey?.Invoke(c);
+                }
 			});
 		}
 
@@ -98,10 +98,10 @@ namespace ControllerOSK.Controls {
 		public static readonly string BaseCharsUpper;
 		public static readonly string SymbolChars;
 
-		static DisplayInputControl(){
-			BaseChars = QwertySequence;
+		static DisplayInputControl() {
+            BaseChars = QwertySequence;
 			BaseCharsUpper = BaseChars.ToUpper();
-			SymbolChars = "%€|&" + "+-*/" + "=[]\\" + "^<>~" + "'!?." + "°{}¥" + "\":;@" + "_#,-" + "$()£";
+			SymbolChars = "%# &" + "+-*/" + "=[]\\" + "^<>~" + "'!?." + "°{}," + "\":;@" + "$€¥£" + "|()_";
 		}
 
 		private const string QwertySequence = "1qew" + "2ryt" + "3uoi" + "4ads" + "5fhg" + "6jlk" + "7zcx" + "8vnb" + "9m0p";

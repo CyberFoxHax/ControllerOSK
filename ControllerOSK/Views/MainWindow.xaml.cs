@@ -6,6 +6,11 @@ namespace ControllerOSK.Views {
 		public MainWindow(){
 			System.Windows.Media.RenderOptions.SetBitmapScalingMode(this, System.Windows.Media.BitmapScalingMode.HighQuality);
 			InitializeComponent();
+            if (System.Diagnostics.Debugger.IsAttached) {
+                ShowActivated = true;
+                Topmost = false;
+                ShowInTaskbar = true;
+            }
 			Background = System.Windows.Media.Brushes.Transparent;
 			InputControl.OnKey += InputControlOnOnKey;
 			InputControl.InputSystem.KeyChange += OpenCloseHandle;
