@@ -36,7 +36,7 @@ namespace ControllerOSK.Views {
 			else if (input.OpenClose && _isEnabled) {
 				input.Disable();
 				Hide();
-				ResetText();
+				Reset();
 				InvalidateVisual();
 				_isEnabled = false;
 				return;
@@ -74,10 +74,15 @@ namespace ControllerOSK.Views {
 			else InputControl.SwitchLowercase();
 		}
 
-		public void ResetText() {
+		public void Reset() {
 			TextBox.Text = "";
 			CaretIndex = 0;
-		}
+            _currentScale = 1;
+            Top = _startPosition.Y;
+            Left= _startPosition.X;
+            Height = _startSize.Y;
+            Width = _startSize.X;
+        }
 
 		public void InsertText(string input, bool send = true) {
 			TextBox.Text = TextBox.Text.Insert(_caretIndex, input);
