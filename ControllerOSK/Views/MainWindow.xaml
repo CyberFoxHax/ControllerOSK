@@ -40,7 +40,7 @@
                     <Border Grid.Row="0" x:Name="InpuContainer" Background="White" Height="69"
                             VerticalAlignment="Bottom" CornerRadius="10" Margin="21,0,19,15" BorderThickness="3"
                             BorderBrush="#333">
-                        <Grid>
+                        <Grid Width="638">
                             <TextBox
                                 CaretBrush="Transparent"
                                 IsReadOnly="True"
