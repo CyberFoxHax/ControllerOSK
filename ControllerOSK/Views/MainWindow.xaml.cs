@@ -149,14 +149,16 @@ namespace ControllerOSK.Views {
 
 		private void SystemTrayOnSkinPick(string s){
 			InputControl.SetSkin(s);
-			System.IO.File.WriteAllText(System.Environment.CurrentDirectory + CurrentSkinFile, System.IO.Path.GetFileName(s));
+            ImageAreaRow.Height = new System.Windows.GridLength(InputControl.Height, System.Windows.GridUnitType.Pixel);
+            System.IO.File.WriteAllText(System.Environment.CurrentDirectory + CurrentSkinFile, System.IO.Path.GetFileName(s));
 		}
 
 		private void OnLoaded(object sender, System.Windows.RoutedEventArgs routedEventArgs){
 			var readSkin = System.IO.File.ReadAllText(System.Environment.CurrentDirectory + CurrentSkinFile);
 			InputControl.SetSkin(System.Environment.CurrentDirectory + "\\Skins\\" + readSkin);
 
-			InputControl.InputSystem.Disable();
+            ImageAreaRow.Height = new System.Windows.GridLength(InputControl.Height, System.Windows.GridUnitType.Pixel);
+            InputControl.InputSystem.Disable();
 			Hide();
 			Reset();
 			InvalidateVisual();
